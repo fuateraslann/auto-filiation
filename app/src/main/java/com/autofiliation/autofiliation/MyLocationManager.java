@@ -22,6 +22,27 @@ import java.util.HashMap;
 
 public class MyLocationManager {
     private Context context;
+    private void saveLocationToDatabase(Location location){
+        System.out.println("Save to db");
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        HashMap<String,Object> data = new HashMap<>();
+        data.put("Time", Calendar.getInstance().getTime());
+        data.put("Latitude", location.getLatitude());
+        data.put("Longitude", location.getLongitude());
+
+        firebaseFirestore.collection("Locations").add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                System.out.println("SUCCESS");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println("FAIL");
+            }
+        });
+    }
     public MyLocationManager(Context context) {
         this.context = context;
     }
@@ -31,6 +52,7 @@ public class MyLocationManager {
         LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
+                saveLocationToDatabase(location);
 
             }
 
