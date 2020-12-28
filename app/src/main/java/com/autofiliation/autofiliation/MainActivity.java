@@ -3,6 +3,7 @@ package com.autofiliation.autofiliation;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.app.AlarmManager;
@@ -18,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Calendar;
@@ -25,6 +27,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private final int PERMISSION_ID = 20;
+    private BottomNavigationView bottomNavigationView;
 
 
     @Override
@@ -45,10 +48,16 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        bottomNavigationView=findViewById(R.id.bottomNav);
+        bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,new HomeFragment()).commit();
 
         firebaseAuth= FirebaseAuth.getInstance();
 
@@ -65,6 +74,37 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod=new
+            BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    Fragment fragment=null;
+                    switch (item.getItemId())
+                    {
+                        case R.id.home:
+                            fragment=new HomeFragment();
+                            break;
+
+                        case R.id.account:
+                            fragment=new AccountFragment();
+                            break;
+
+                        case R.id.location:
+                            fragment=new LocationFragment();
+                            break;
+
+                        case  R.id.setting:
+                            fragment=new SettingsFragment();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+
+
+                    return true;
+                }
+            };
 
 
     private boolean isLocationEnabled() {

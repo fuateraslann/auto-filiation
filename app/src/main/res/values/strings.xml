@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">AutoFiliation</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Account">Account</string>
+    <string name="HomePage">HomePage</string>
+    <string name="Location">Location</string>
+    <string name="Settings">Settings</string>
+    <string name="text_label">nav_menu</string>
+    <string name="bottom_nav_menu">bottom_nav_menu</string>
 </resources>
