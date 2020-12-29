@@ -1,7 +1,17 @@
 package com.autofiliation.autofiliation;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -11,10 +21,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+//***
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private LocationManager locationmanager;
+    //***
+    private double enlem;
+    private double boylam;
 
+
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +51,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+
+
+
+
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        locationmanager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                enlem = location.getLatitude();
+                boylam = location.getLongitude();
+                LatLng my_location = new LatLng(enlem, boylam );
+                mMap.addMarker(new MarkerOptions().position(my_location).title("Marker in My location"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(my_location));
+            }
+        };
+        locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, locationListener);
 
+
+        //mMap.setMyLocationEnabled();
         // Add a marker in Sydney and move the camera
-        LatLng metu = new LatLng(39.89, 32.78);
-        mMap.addMarker(new MarkerOptions().position(metu).title("Marker in METU"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(metu));
+        //LatLng metu = new LatLng(39.89, 32.78);
     }
 }
