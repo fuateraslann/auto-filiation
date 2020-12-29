@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
                             break;
 
                         case R.id.location:
+                            Intent newintent = new Intent(MainActivity.this,MapsActivity.class);
+                            startActivity(newintent);
                             fragment=new LocationFragment();
                             break;
 
