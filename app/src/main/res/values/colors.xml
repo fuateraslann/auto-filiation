@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorGreen">#31F662</color>
+    <color name="colorTrendStart">#31EFF6</color>
+    <color name="colorTrendEnd">#4CAF50</color>
+    <color name="colorOrange">#FF9800</color>
+
 </resources>
