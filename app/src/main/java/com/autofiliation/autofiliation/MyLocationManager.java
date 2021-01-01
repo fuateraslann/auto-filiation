@@ -14,8 +14,13 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -43,6 +48,8 @@ public class MyLocationManager {
             }
         });
     }
+
+
     public MyLocationManager(Context context) {
         this.context = context;
     }
@@ -52,7 +59,7 @@ public class MyLocationManager {
         LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                //saveLocationToDatabase(location);
+                saveLocationToDatabase(location);
 
             }
 
@@ -71,8 +78,10 @@ public class MyLocationManager {
 
             }
         };
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,600000,0,locationListener);
         //locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, Looper.getMainLooper());
     }
+
+
 
 }

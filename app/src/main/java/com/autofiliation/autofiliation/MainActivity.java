@@ -1,6 +1,7 @@
 package com.autofiliation.autofiliation;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -14,20 +15,37 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private final int PERMISSION_ID = 20;
     private BottomNavigationView bottomNavigationView;
+
+    private static ArrayList<Double> pastLocationsLatitude = new ArrayList<>();
+    private static ArrayList<Double> pastLocationsLongitude = new ArrayList<>();
+    private static ArrayList<Timestamp> pastLocationsTime= new ArrayList<>();
 
 
     @Override
@@ -59,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.container,new HomeFragment()).commit();
 
+
+
         firebaseAuth= FirebaseAuth.getInstance();
 
         if(!checkPermissions()){
@@ -72,6 +92,55 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(intent);
         }
+
+        /**
+         * Start of Collection
+         * Get Different locations last 5 day
+         */
+        Date  mydate = new Date();
+        Date lastdays = new Date();
+        int a=5;
+
+        lastdays.setDate(lastdays.getDate() - a);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference IOTransactions = db.collection("Locations");
+
+        Query transactionsQuery = IOTransactions.whereLessThan("Time", mydate).whereGreaterThan("Time", lastdays);
+
+        transactionsQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w("FirestoreDemo", "Listen failed.", e);
+                    return;
+                }
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    if (doc.get("Latitude") != null) {
+                        //System.out.println("*****************");
+
+                        if(pastLocationsLongitude.size() != 0) {
+                            if (pastLocationsLatitude.get(pastLocationsLatitude.size() - 1) == doc.getData().get("Latitude")
+                                    && pastLocationsLongitude.get(pastLocationsLongitude.size() - 1) == doc.getData().get("Longitude")) {
+                                continue;
+                            }
+                        }
+                        else{
+
+                            pastLocationsLatitude.add((Double) doc.getData().get("Latitude"));
+                            pastLocationsLongitude.add((Double) doc.getData().get("Longitude"));
+                            pastLocationsTime.add((Timestamp) doc.getData().get("Time"));
+                        }
+                    }
+                }
+                System.out.println(pastLocationsLatitude);
+                System.out.println(pastLocationsLongitude);
+                System.out.println(pastLocationsTime);
+            }
+        });
+        /**
+         * End of Collection
+         */
 
     }
 
