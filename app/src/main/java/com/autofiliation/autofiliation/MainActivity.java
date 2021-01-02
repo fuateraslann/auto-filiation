@@ -43,11 +43,6 @@ public class MainActivity extends AppCompatActivity {
     private final int PERMISSION_ID = 20;
     private BottomNavigationView bottomNavigationView;
 
-    private static ArrayList<Double> pastLocationsLatitude = new ArrayList<>();
-    private static ArrayList<Double> pastLocationsLongitude = new ArrayList<>();
-    private static ArrayList<Timestamp> pastLocationsTime= new ArrayList<>();
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -93,54 +88,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        /**
-         * Start of Collection
-         * Get Different locations last 5 day
-         */
-        Date  mydate = new Date();
-        Date lastdays = new Date();
-        int a=5;
-
-        lastdays.setDate(lastdays.getDate() - a);
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference IOTransactions = db.collection("Locations");
-
-        Query transactionsQuery = IOTransactions.whereLessThan("Time", mydate).whereGreaterThan("Time", lastdays);
-
-        transactionsQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w("FirestoreDemo", "Listen failed.", e);
-                    return;
-                }
-                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                    if (doc.get("Latitude") != null) {
-                        //System.out.println("*****************");
-
-                        if(pastLocationsLongitude.size() != 0) {
-                            if (pastLocationsLatitude.get(pastLocationsLatitude.size() - 1) == doc.getData().get("Latitude")
-                                    && pastLocationsLongitude.get(pastLocationsLongitude.size() - 1) == doc.getData().get("Longitude")) {
-                                continue;
-                            }
-                        }
-                        else{
-
-                            pastLocationsLatitude.add((Double) doc.getData().get("Latitude"));
-                            pastLocationsLongitude.add((Double) doc.getData().get("Longitude"));
-                            pastLocationsTime.add((Timestamp) doc.getData().get("Time"));
-                        }
-                    }
-                }
-                System.out.println(pastLocationsLatitude);
-                System.out.println(pastLocationsLongitude);
-                System.out.println(pastLocationsTime);
-            }
-        });
-        /**
-         * End of Collection
-         */
 
     }
 
@@ -229,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         //calendar.add(Calendar.MINUTE, 1);
 
         //setting the repeating alarm that will be fired every X minutes
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 30*1000, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 600000, pendingIntent);
         Toast.makeText(this, "Alarm is set!", Toast.LENGTH_SHORT).show();
         System.out.println("Alarm is set!");
     }

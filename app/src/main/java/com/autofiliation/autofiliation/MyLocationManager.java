@@ -59,8 +59,7 @@ public class MyLocationManager {
         LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                saveLocationToDatabase(location);
-
+                //saveLocationToDatabase(location);
             }
 
             @Override
