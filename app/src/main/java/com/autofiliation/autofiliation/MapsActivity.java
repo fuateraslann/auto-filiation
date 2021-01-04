@@ -56,6 +56,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -105,7 +106,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Date  mydate = new Date();
         Date lastdays = new Date();
-        int a=5;
+        int a=10;
 
         lastdays.setDate(lastdays.getDate() - a);
 
@@ -134,9 +135,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         pastLocationsLongitude.add((Double) doc.getData().get("Longitude"));
                         pastLocationsTime.add((Timestamp) doc.getData().get("Time"));
 
+
+                        Date s= ((Timestamp) doc.getData().get("Time")).toDate();
+                        SimpleDateFormat sdf=new SimpleDateFormat("E, dd-M-yyyy hh:mm");
+                        String strDate = sdf.format(s);
+
                         //adding providing marker
                         LatLng my_location = new LatLng((Double) doc.getData().get("Latitude"), (Double) doc.getData().get("Longitude"));
-                        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).position(my_location));
+                        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).position(my_location).title(strDate));
 
                     }
 
@@ -160,7 +166,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 boylam = location.getLongitude();
                 LatLng my_location = new LatLng(enlem, boylam );
 
-                mMap.addMarker(new MarkerOptions().position(my_location).title("Marker in My location"));
+                mMap.addMarker(new MarkerOptions().position(my_location).title("My current location"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(my_location));
 
                 getPastLocations();
