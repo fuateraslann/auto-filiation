@@ -86,6 +86,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
+
     }
 
 
@@ -106,7 +108,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Date  mydate = new Date();
         Date lastdays = new Date();
-        int a=10;
+        int a=30;
 
         lastdays.setDate(lastdays.getDate() - a);
 
@@ -143,6 +145,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         //adding providing marker
                         LatLng my_location = new LatLng((Double) doc.getData().get("Latitude"), (Double) doc.getData().get("Longitude"));
                         mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).position(my_location).title(strDate));
+
 
                     }
 

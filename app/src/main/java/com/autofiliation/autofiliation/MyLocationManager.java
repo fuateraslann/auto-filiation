@@ -8,15 +8,19 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -25,8 +29,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import static android.provider.Settings.System.getString;
+
 public class MyLocationManager {
     private Context context;
+    private UserLocation mUserLocation;
+
     private void saveLocationToDatabase(Location location){
         System.out.println("Save to db");
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -49,6 +57,55 @@ public class MyLocationManager {
         });
     }
 
+    private void saveUserLocation(Location location){
+
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        if(mUserLocation != null){
+            DocumentReference locationRef = firebaseFirestore
+                    .collection("UserLocation")
+                    .document(FirebaseAuth.getInstance().getUid());
+
+            locationRef.set(mUserLocation).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        Log.d("TAG", "saveUserLocation: \ninserted user location into database." +
+                                "\n latitude: " + mUserLocation.getLatitude() +
+                                "\n longitude: " + mUserLocation.getLongitude());
+                    }
+                }
+            });
+        }
+    }
+
+
+    private void getUserDetails(){
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        if(mUserLocation == null){
+            mUserLocation = new UserLocation();
+            DocumentReference userRef = firebaseFirestore
+                    .collection("UserLocation")
+                    .document(FirebaseAuth.getInstance().getUid());
+
+            userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.isSuccessful()){
+                        Log.d("TAG", "onComplete: successfully set the user client.");
+                        User user = task.getResult().toObject(User.class);
+                        mUserLocation.setUser(user);
+                        //saveLocationToDatabase(mUserLocation);
+                    }
+                }
+            });
+        }
+        else{
+            //saveLocationToDatabase(mUserLocation);
+        }
+    }
+
+
 
     public MyLocationManager(Context context) {
         this.context = context;
@@ -60,6 +117,7 @@ public class MyLocationManager {
             @Override
             public void onLocationChanged(Location location) {
                 //saveLocationToDatabase(location);
+                //saveUserLocation(location);
             }
 
             @Override
