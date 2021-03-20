@@ -1,4 +1,5 @@
 package com.autofiliation.autofiliation;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -35,11 +36,11 @@ public class MyLocationManager {
     private Context context;
     private UserLocation mUserLocation;
 
-    private void saveLocationToDatabase(Location location){
+    private void saveLocationToDatabase(Location location) {
         System.out.println("Save to db");
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
-        HashMap<String,Object> data = new HashMap<>();
+        HashMap<String, Object> data = new HashMap<>();
         data.put("Time", Calendar.getInstance().getTime());
         data.put("Latitude", location.getLatitude());
         data.put("Longitude", location.getLongitude());
@@ -57,7 +58,7 @@ public class MyLocationManager {
         });
     }
 
-    private void saveUserLocation(Location location){
+    /*private void saveUserLocation(Location location){
 
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         if(mUserLocation != null){
@@ -76,10 +77,10 @@ public class MyLocationManager {
                 }
             });
         }
-    }
+    }*/
 
 
-    private void getUserDetails(){
+    /*private void getUserDetails(){
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
         if(mUserLocation == null){
@@ -103,15 +104,15 @@ public class MyLocationManager {
         else{
             //saveLocationToDatabase(mUserLocation);
         }
-    }
-
+    }*/
 
 
     public MyLocationManager(Context context) {
         this.context = context;
     }
+
     @SuppressLint("MissingPermission")
-    public void requestLocationUpdate(){
+    public void requestLocationUpdate() {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new LocationListener() {
             @Override
@@ -135,10 +136,9 @@ public class MyLocationManager {
 
             }
         };
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,600000,0,locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 600000, 0, locationListener);
         //locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, Looper.getMainLooper());
     }
-
 
 
 }

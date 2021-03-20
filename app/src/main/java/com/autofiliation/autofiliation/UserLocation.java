@@ -1,25 +1,17 @@
 package com.autofiliation.autofiliation;
 
-import com.google.firebase.firestore.ServerTimestamp;
-
-import java.util.Date;
-
 public class UserLocation {
 
     private Double longitude;
     private Double latitude;
-    private @ServerTimestamp Date timestamp;
-    private User user;
+    private Double altitude;
+    private long time;
 
-    public UserLocation(Double longitude,Double latitude,Date timestamp,User user){
+    public UserLocation(Double longitude, Double latitude, long time) {
 
         this.longitude = longitude;
         this.latitude = latitude;
-        this.timestamp = timestamp;
-        this.user = user;
-    }
-    public UserLocation(){
-
+        this.time = time;
     }
 
     public Double getLongitude() {
@@ -38,19 +30,19 @@ public class UserLocation {
         this.latitude = latitude;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
+    public Double getAltitude() {
+        return altitude;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public void setAltitude(Double altitude) {
+        this.altitude = altitude;
     }
 
-    public User getUser() {
-        return user;
+    public long getTime() {
+        return time;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setTime(long time) {
+        this.time = time;
     }
 }
