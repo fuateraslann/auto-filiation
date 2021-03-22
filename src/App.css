@@ -1,0 +1,47 @@
+.note{
+  border: 2px solid black;
+  width: 250px;
+  height: 250px;
+  background-color: #222f3e;
+  justify-content: space-around;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+.app{
+  min-height: 100vh;
+  background-color: #8395af;
+  justify-content: space-around;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+.case0{
+  color: #ffffff;
+  font-size: 40px;
+}
+.case1 {
+  color : #00f;
+  font-size: 40px;
+}
+.case2{
+  color: #00a;
+  font-size: 40px;
+}
+.case3{
+  color:#005;
+  font-size: 40px;
+}
+.nav{
+  margin: 0;
+  padding: 0;
+  min-height: 5vh;
+  background-color: aqua;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  list-style: none;
+}
+
