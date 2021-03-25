@@ -5,7 +5,7 @@ require("./auth");
 
 ReactDOM.render(
     <React.StrictMode>
-   <ShowLocations/>
+
   </React.StrictMode>,document.getElementById('root')
 
 );

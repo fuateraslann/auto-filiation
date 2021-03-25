@@ -17,10 +17,14 @@ auth.onAuthStateChanged(u=>{
 const userLoggedIn =(e)=>{
     if(e){
         // @ts-ignore
+        document.getElementById("SignOutButton").style.display="block"
+        // @ts-ignore
         document.getElementById("loginButton").style.display="none"
         // @ts-ignore
         document.getElementById("UsersButton").style.display="block"
     }else{
+        // @ts-ignore
+        document.getElementById("SignOutButton").style.display="none"
         // @ts-ignore
         document.getElementById("loginButton").style.display="block"
         // @ts-ignore
@@ -60,3 +64,10 @@ loginForm.addEventListener("submit" ,(e) => {
     });
 })
 
+//Sign Out
+const SignOut= document.querySelector("#SignOutButton");
+// @ts-ignore
+SignOut.addEventListener("click", (e) =>{
+    e.preventDefault();
+    auth.signOut();
+})
