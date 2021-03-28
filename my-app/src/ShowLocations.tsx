@@ -12,7 +12,7 @@ export default function ShowLocations() {
             console.log(doc.id, " => ", doc.data());
         });
     });
-    return(<div>AA</div>)
+    return(<div>xx</div>)
 }
 
 
