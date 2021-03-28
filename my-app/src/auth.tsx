@@ -47,7 +47,7 @@ loginForm.addEventListener("submit" ,(e) => {
     // @ts-ignore
     const mail = loginForm["login-email"].value;// @ts-ignore
     const password = loginForm["login-password"].value;
-    db.collection("Admin").get().then((e) => {
+    db.collection("Admins").get().then((e) => {
         e.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshot
             if(mail === doc.data().email){

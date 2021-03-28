@@ -5,15 +5,14 @@ import 'firebase/auth';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 var firebaseConfig = {
-    apiKey: "AIzaSyBy-VJq6ZBG7EH5xvjFEK0RVgk_MxWhjnY",
-    authDomain: "autofiliation-348e0.firebaseapp.com",
-    databaseURL: "https://autofiliation-348e0.firebaseio.com",
-    projectId: "autofiliation-348e0",
-    storageBucket: "autofiliation-348e0.appspot.com",
-    messagingSenderId: "415487351930",
-    appId: "1:415487351930:web:5840fc43147cca42292fc3",
-    measurementId: "G-FWJMWTZE2L"
-}
+    apiKey: "AIzaSyCCSAZcZs-hnXoca7Z3gAmvMCPk_CyNOA4",
+    authDomain: "autofiliation-70952.firebaseapp.com",
+    projectId: "autofiliation-70952",
+    storageBucket: "autofiliation-70952.appspot.com",
+    messagingSenderId: "616028939829",
+    appId: "1:616028939829:web:25748b835e7507b922737c",
+    measurementId: "G-WNMM6C0J9J"
+};
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
