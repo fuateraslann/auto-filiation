@@ -1,13 +1,22 @@
-.note{
-  border: 2px solid black;
-  width: 250px;
-  height: 250px;
-  background-color: #222f3e;
-  justify-content: space-around;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  color: white;
+.logo{
+  width:64px;
+  margin-top : 5px ;
+}
+.UsersButtonCss{
+  color: black;
+  display: block;
+}
+.LoginButtonCss{
+  color: black;
+  display: block;
+}
+.Logo {
+  background-image: url(./logo.png);
+  width:64px;
+  margin-top : 5px ;
+}
+.modal{
+  height: auto;
 }
 .app{
   min-height: 100vh;

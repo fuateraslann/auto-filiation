@@ -6,7 +6,7 @@ import "firebase/auth"
 
 // @ts-ignore
 export default function ShowLocations() {
-    db.collection("Users").get().then((querySnapshot) => {
+    db.collection("GetUsers").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshot
             console.log(doc.id, " => ", doc.data());

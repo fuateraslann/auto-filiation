@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ShowLocations from "./ShowLocations";
-import Users from "./Users";
-require("./auth");
+import App from "./App";
+//require("./NavBar");
+
 
 ReactDOM.render(
     <React.StrictMode>
-      <Users/>
+        <App/>
   </React.StrictMode>,document.getElementById('root')
 
 );

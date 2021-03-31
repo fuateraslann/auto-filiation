@@ -1,4 +1,8 @@
 import {auth , db} from "./firebase/config"
+import Users from "./Users"
+import React from "react";
+import "./App.css"
+import logo from  "./logo.png"
 
 // authStateChange
 auth.onAuthStateChanged(u=>{
@@ -71,3 +75,34 @@ SignOut.addEventListener("click", (e) =>{
     e.preventDefault();
     auth.signOut();
 })
+
+
+const UsersButton = document.querySelector("#UsersButton");
+// @ts-ignore
+UsersButton.addEventListener("click",(e => {
+    e.preventDefault();
+    console.log("a")
+}))
+
+export default function Nav(){
+    return(
+            <nav className="z-depth-0 red darken-4">
+                <div className="nav-wrapper container">
+                    <a href="#" className=" brand-logo">
+                        <img src={logo} className="logo" alt = "Logo"/>
+                    </a>
+                    <ul id="nav-mobile" className="right hide-on-med-and-down">
+                        <li className="logged-out" id="UsersButton" >
+                            <a href="#" className="UsersButtonCss">Users</a>
+                        </li>
+                        <li className="logged-out" id="SignOutButton" >
+                            <a href="#" className="UsersButtonCss ">Sign Out</a>
+                        </li>
+                        <li className="logged-in" id="loginButton" >
+                            <a href="#" className="UsersButtonCss" data-target="modal-login">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+    )
+}
