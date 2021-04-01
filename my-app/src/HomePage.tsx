@@ -1,29 +1,46 @@
-import {auth , db} from "./firebase/config"
-import React, {Component} from "react";
+import {auth } from "./firebase/config"
+import React from "react";
 import "./App.css"
 import logo from  "./logo.png"
 import 'materialize-css';
+import {BrowserRouter as Router, Link ,useHistory} from "react-router-dom";
 
 export default function HomePage(){
-
+    const history = useHistory();
     //Sign Out
     function SignOutControl(){
         console.log("a")
         // @ts-ignore
         auth.signOut();
+        history.push("/")
+        history.go(0)
+    }
+    function HistoryUSers(){
+        // @ts-ignore
+        history.push("/Users")
     }
     return(
         <nav className="z-depth-0 red darken-4">
             <div className="nav-wrapper container">
-                <a href="#" className=" brand-logo">
+                <a className=" brand-logo">
                     <img src={logo} className="logo" alt = "Logo"/>
                 </a>
                 <ul id="nav-mobile" className="right hide-on-med-and-down">
                         <li className="logged-out" id="UsersButton">
-                            <a href="#" className=" black-text " >Users</a>
+                            <Router>
+                                <Link to ="/Users"
+                                      className="black-text"
+                                      onClick={HistoryUSers}
+                                >Users</Link>
+                            </Router>
                         </li>
                         <li className="logged-out" id="SignOutButton">
-                            <a href="#" className=" black-text " onClick={SignOutControl}>Sign Out</a>
+                            <Router>
+                                <Link to ="/"
+                                      className="black-text"
+                                      onClick={SignOutControl}
+                                >Sign Out</Link>
+                            </Router>
                         </li>
                 </ul>
             </div>

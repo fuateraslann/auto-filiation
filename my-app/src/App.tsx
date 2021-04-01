@@ -1,9 +1,7 @@
-import React,{useState, useEffect} from 'react';
+import React from 'react';
 import './App.css';
 import LoginPage from "./LoginPage"
-import ShowLocations from "./ShowLocations";
-import {BrowserRouter as Router , Switch , Route ,Link } from "react-router-dom";
-import Users from "./Users";
+import {BrowserRouter as Router , Switch , Route } from "react-router-dom";
 import GetUsers from "./GetUsers";
 import HomePage from "./HomePage";
 
@@ -14,8 +12,8 @@ function App() {
             <div>
                 <Switch>
                     <Route path ="/Users" component={GetUsers}/>
-                    <Route path="/" exact  component={LoginPage}/>
-                    <Route path="/Auto-Filiation-Command-Panel" component={HomePage}/>
+                    <Route path="/" exact component={LoginPage}/>
+                    <Route path="/Auto-Filiation-Command-Panel" exact component={HomePage}/>
                 </Switch>
             </div>
         </Router>

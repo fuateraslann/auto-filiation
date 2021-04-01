@@ -1,12 +1,11 @@
 import {auth , db} from "./firebase/config"
-import Users from "./Users"
-import {BrowserRouter as Router , Switch , Route ,Link } from "react-router-dom";
-import React, {Component} from "react";
+import {BrowserRouter as Router ,Link , useHistory } from "react-router-dom";
+import React from "react";
 import "./App.css"
 import logo from  "./logo.png"
 import 'materialize-css';
-import GetUsers from "./GetUsers";
-import HomePage from "./HomePage";
+import { Modal } from "antd";
+
 
 // authStateChange
 auth.onAuthStateChanged(u=>{
@@ -48,9 +47,9 @@ document.addEventListener("DOMContentLoaded",function (){
 });
 
 // login
-//const loginForm = document.querySelector("#login-form");
+/*const loginForm = document.querySelector("#login-form");
 // @ts-ignore
-/*loginForm.addEventListener("submit" ,(e) => {
+loginForm.addEventListener("submit" ,(e) => {
     e.preventDefault();
     // @ts-ignore
     const mail = loginForm["login-email"].value;// @ts-ignore
@@ -70,8 +69,8 @@ document.addEventListener("DOMContentLoaded",function (){
             }
         });
     });
-})
-*/
+})*/
+
 //Sign Out
 /*const SignOut= document.querySelector("#SignOutButton");
 // @ts-ignore
@@ -89,6 +88,7 @@ UsersButton.addEventListener("click",(e => {
 }))*/
 
 export default function LoginPage(){
+    const history = useHistory();
     function Mailcontrol(){
         const loginForm = document.querySelector("#login-form");
         // @ts-ignore
@@ -97,50 +97,54 @@ export default function LoginPage(){
         db.collection("Admins").get().then((e) => {
             e.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshot
-                if(mail === doc.data().email){
+                const loginModal = document.querySelector("#modal-login");
+                // @ts-ignore
+                if(mail === doc.data().email){ M.Modal.getInstance(loginModal).close();
                     auth.signInWithEmailAndPassword(mail,password).then(admin=>{
                         console.log(admin);
-                        const loginModal = document.querySelector("#modal-login");
-                        // @ts-ignore
-                        M.Modal.getInstance(loginModal).close();
                         // @ts-ignore
                         loginForm.reset();
+                        history.push("/Auto-Filiation-Command-Panel")
                     })
+
                 }
             });
+
         });
     }
     return(
         <nav className="z-depth-0 red darken-4">
             <div className="nav-wrapper container">
-                <a href="#" className=" brand-logo">
+                <a className=" brand-logo">
                     <img src={logo} className="logo" alt = "Logo"/>
                 </a>
                 <ul id="nav-mobile" className="right hide-on-med-and-down">
                     <li className="logged-in" id="loginButton" >
-                        <a href="#" className="black-text modal-trigger" data-target ="modal-login">Login</a>
+                        <a className="black-text modal-trigger" data-target ="modal-login" >Login</a>
                     </li>
-                        <div id="modal-login" className="modal"   >
-                            <div className="modal-content" >
-                                <form id="login-form" >
-                                    <div className="input-field">
-                                        <input type="email" id="login-email" required/>
-                                        <label htmlFor="login-email">Email</label>
-                                    </div>
-                                    <div className="input-field">
-                                        <input type="password" id="login-password" required/>
-                                        <label htmlFor="login-password">Password</label>
-                                    </div>
-                                    <Router>
-                                        <Link to ="/Auto-Filiation-Command-Panel"
-                                              className="btn red darken-1"
-                                              onClick={Mailcontrol}
-                                        >Login</Link>
-                                    </Router>
-                                </form>
-                            </div>
-                        </div>
                 </ul>
+                    <div id="modal-login" className="modal"   >
+                        <div className="modal-content" >
+                            <form id="login-form" >
+                                <div className="input-field">
+                                    <input type="email" id="login-email" required/>
+                                    <label htmlFor="login-email">Email</label>
+                                </div>
+                                <div className="input-field">
+                                    <input type="password" id="login-password" required/>
+                                    <label htmlFor="login-password">Password</label>
+                                </div>
+                                <Router>
+                                    <Link to ="/Auto-Filiation-Command-Panel"
+                                          className="btn red darken-1"
+                                          onClick={Mailcontrol}
+                                          data-dismiss="modal-login"
+                                    >Login</Link>
+                                </Router>
+                            </form>
+                        </div>
+                    </div>
+
             </div>
         </nav>)
 
