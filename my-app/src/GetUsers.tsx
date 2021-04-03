@@ -1,49 +1,35 @@
 import React,{useEffect,useState}from 'react';
 import {db} from "./firebase/config"
-//import firebaseDB from "./firebase/config"
+
 
 
 export default function GetUsers(){
-    const [UsersInfo,setUsersInfo] = useState({
-        email : "",
-    });
-    /*db.collection("GetUsers").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshot
-            console.log(doc.id, " => ", doc.data());
-        });
-    });*/
+    const [UsersInfo ,setUsersInfo] = useState( 0);
     useEffect(()=>{
-        /*firebaseDB.child("GetUsers").on("value",snapshot=>{
-            if(snapshot.val() != null){
-                setUsersInfo({
-                    ...snapshot.val()
-                })
-                console.log(snapshot.val());
-            }
-        })*/
-        db.collection("Admins").get().then((querySnapshot) => {
+        db.collection("Users").get().then((querySnapshot) => {
+            // @ts-ignore
+            const usersData: any = [];
             querySnapshot.forEach((doc) => {
+                usersData.push({...doc.data(), id : doc.id})
                 // doc.data() is never undefined for query doc snapshot
-                setUsersInfo({
-                    email: doc.data().email
-                })
+                // @ts-ignore
             });
+            // @ts-ignore
+            setUsersInfo(usersData)
         });
-    })
-
+    },[])
+    console.log(UsersInfo)
     return(
-        <div>
             <table>
                 <thead>
                 {Object.keys(UsersInfo).map(id=>{
-                    return <tr key= {id}>
-                        <td>{UsersInfo.email}</td>
+                    return <tr >
+                        <td>{// @ts-ignore
+                             UsersInfo[id].email}</td>
                     </tr>
                 })}
+
                 </thead>
             </table>
-        </div>
     )
-
 }

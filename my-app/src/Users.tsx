@@ -9,7 +9,6 @@ export default function Users() {
           <div>
             <Switch>
                 <Route path ="/Users" component={GetUsers}/>
-                <Route path="/" exact />
             </Switch>
           </div>
         </Router>

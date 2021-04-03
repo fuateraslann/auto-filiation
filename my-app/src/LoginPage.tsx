@@ -4,7 +4,6 @@ import React from "react";
 import "./App.css"
 import logo from  "./logo.png"
 import 'materialize-css';
-import { Modal } from "antd";
 
 
 // authStateChange
@@ -115,12 +114,12 @@ export default function LoginPage(){
     return(
         <nav className="z-depth-0 red darken-4">
             <div className="nav-wrapper container">
-                <a className=" brand-logo">
+                <a href="/" className=" brand-logo">
                     <img src={logo} className="logo" alt = "Logo"/>
                 </a>
                 <ul id="nav-mobile" className="right hide-on-med-and-down">
                     <li className="logged-in" id="loginButton" >
-                        <a className="black-text modal-trigger" data-target ="modal-login" >Login</a>
+                        <a href="/" className="black-text modal-trigger" data-target ="modal-login" >Login</a>
                     </li>
                 </ul>
                     <div id="modal-login" className="modal"   >

@@ -9,7 +9,6 @@ export default function HomePage(){
     const history = useHistory();
     //Sign Out
     function SignOutControl(){
-        console.log("a")
         // @ts-ignore
         auth.signOut();
         history.push("/")
@@ -22,7 +21,7 @@ export default function HomePage(){
     return(
         <nav className="z-depth-0 red darken-4">
             <div className="nav-wrapper container">
-                <a className=" brand-logo">
+                <a href="/" className=" brand-logo">
                     <img src={logo} className="logo" alt = "Logo"/>
                 </a>
                 <ul id="nav-mobile" className="right hide-on-med-and-down">
