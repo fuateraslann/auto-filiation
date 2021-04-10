@@ -26,6 +26,11 @@ export default function GetUsers(){
                     return <tr >
                         <td>{// @ts-ignore
                              UsersInfo[id].email}</td>
+                        <td>{// @ts-ignore
+                            UsersInfo[id].name}</td>
+                        <td>{// @ts-ignore
+                            UsersInfo[id].surname}</td>
+
                     </tr>
                 })}
 
