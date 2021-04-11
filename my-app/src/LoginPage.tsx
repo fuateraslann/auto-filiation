@@ -143,8 +143,8 @@ export default function LoginPage(){
                             </form>
                         </div>
                     </div>
-
             </div>
-        </nav>)
+        </nav>
+    )
 
 }

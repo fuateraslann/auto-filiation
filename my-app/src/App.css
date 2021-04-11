@@ -18,6 +18,17 @@
 .modal{
   height: auto;
 }
+.input-group-text{
+  border-color: #5cb85c;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+.form-control{
+  box-shadow: blue;
+  border: 1px solid #ccc;
+  -webkit-box-shadow: none;
+  display: inline-block;
+}
 .app{
   min-height: 100vh;
   background-color: #8395af;

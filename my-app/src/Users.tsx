@@ -5,16 +5,17 @@ import Contacts from "./components/Contacts"
 
 export default function Users() {
     return (
+        <body className="z-depth-0 #fafafa grey lighten-5">
         <div className="row">
             <div className="col-md-8 offset-md-1">
-                <Contacts/>
+                <Router>
+                    <Switch>
+                        <Route path ="/Users" component={Contacts}/>
+                    </Switch>
+                </Router>
             </div>
-            <Router>
-                <Switch>
-                    <Route path ="/Users" component={GetUsers}/>
-                </Switch>
-            </Router>
         </div>
+        </body>
 
     )
 }
