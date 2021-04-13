@@ -1,5 +1,6 @@
 import React from "react";
 import ContactForm from "./ContactForm";
+import GetUsers from "../GetUsers";
 
 export default function Contacts(){
     return(
@@ -18,6 +19,7 @@ export default function Contacts(){
                 </div>
                 <div className="col-md-7">
                     User List
+                    <GetUsers/>
                 </div>
             </div>
         </div>
