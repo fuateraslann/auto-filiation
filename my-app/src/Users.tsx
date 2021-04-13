@@ -10,7 +10,7 @@ export default function Users() {
             <div className="col-md-8 offset-md-1">
                 <Router>
                     <Switch>
-                        <Route path ="/Users" component={Contacts}/>
+                        <Route path ="/Users" component={GetUsers}/>
                     </Switch>
                 </Router>
             </div>

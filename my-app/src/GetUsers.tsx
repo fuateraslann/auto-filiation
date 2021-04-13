@@ -19,21 +19,25 @@ export default function GetUsers(){
         });
     },[])
     console.log(UsersInfo)
+    let ids: any = [];
+    ids =Object.keys(UsersInfo).filter(id=>
+        // @ts-ignore
+        UsersInfo[id].email === "aaaaa@hotmail.com"
+    )
     return(
             <table>
                 <thead>
-                {Object.keys(UsersInfo).map(id=>{
+                {ids.map((id: string | number) => {
                     return <tr >
                         <td>{// @ts-ignore
-                             UsersInfo[id].email}</td>
+                            UsersInfo[id].email}</td>
                         <td>{// @ts-ignore
                             UsersInfo[id].name}</td>
                         <td>{// @ts-ignore
                             UsersInfo[id].surname}</td>
-
                     </tr>
-                })}
 
+                })}
                 </thead>
             </table>
     )
