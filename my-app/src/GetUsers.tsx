@@ -3,7 +3,7 @@ import {db} from "./firebase/config"
 
 
 
-export default function GetUsers(){
+export default function GetUsers(props: { email : string, name :string, surname : string }){
     const [UsersInfo ,setUsersInfo] = useState( 0);
     useEffect(()=>{
         db.collection("Users").get().then((querySnapshot) => {
@@ -22,7 +22,7 @@ export default function GetUsers(){
     let ids: any = [];
     ids =Object.keys(UsersInfo).filter(id=>
         // @ts-ignore
-        UsersInfo[id].email === "aaaaa@hotmail.com"
+        UsersInfo[id].email === props.email
     )
     return(
             <table>
