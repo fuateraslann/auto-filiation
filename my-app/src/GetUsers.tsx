@@ -3,7 +3,7 @@ import {db} from "./firebase/config"
 
 
 
-export default function GetUsers(props: { email : string, name :string, surname : string }){
+export default function GetUsers(props: any){
     const [UsersInfo ,setUsersInfo] = useState( 0);
     useEffect(()=>{
         db.collection("Users").get().then((querySnapshot) => {
