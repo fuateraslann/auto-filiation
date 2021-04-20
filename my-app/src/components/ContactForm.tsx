@@ -18,6 +18,7 @@ export default function ContactForm(props :any){
     const SaveInputs = (e: { preventDefault: () => void; }) =>{
         e.preventDefault();
         console.log(Inputs);
+        props.getInputs(Inputs)
     }
     return(
        <form onSubmit={SaveInputs}>
