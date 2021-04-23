@@ -3,7 +3,8 @@ import {db} from "./firebase/config"
 
 
 
-export default function GetUsers(props: any){
+// @ts-ignore
+export default function GetUsers({Inputs}){
     const [UsersInfo ,setUsersInfo] = useState( 0);
     useEffect(()=>{
         db.collection("Users").get().then((querySnapshot) => {
@@ -19,11 +20,15 @@ export default function GetUsers(props: any){
         });
     },[])
     console.log(UsersInfo)
+    console.log(Inputs.name)
     let ids: any = [];
     ids =Object.keys(UsersInfo).filter(id=>
-        // @ts-ignore
-        UsersInfo[id].email === props.email
+            // @ts-ignore
+            UsersInfo[id].email ===Inputs.email ||// @ts-ignore
+            UsersInfo[id].name ===Inputs.name ||// @ts-ignore
+            UsersInfo[id].surname ===Inputs.surname
     )
+
     return(
             <table>
                 <thead>
@@ -31,6 +36,7 @@ export default function GetUsers(props: any){
                     return <tr >
                         <td>{// @ts-ignore
                             UsersInfo[id].email}</td>
+                        <td>{Inputs.name}</td>
                         <td>{// @ts-ignore
                             UsersInfo[id].name}</td>
                         <td>{// @ts-ignore

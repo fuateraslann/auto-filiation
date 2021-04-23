@@ -1,10 +1,12 @@
-import React ,{useState , useEffect} from "react";
-
+import React ,{useState , useEffect , useContext} from "react";
+import {UserContext} from "../UserContext"
 export default function ContactForm(props :any){
+
     const formInputs= {
         name : "",
         surname : "",
         email: "",
+        age : undefined,
     }
     const[Inputs , setInputs] = useState(formInputs);
     const inputsChanged = (e : any) =>{
@@ -17,7 +19,7 @@ export default function ContactForm(props :any){
     }
     const SaveInputs = (e: { preventDefault: () => void; }) =>{
         e.preventDefault();
-        console.log(Inputs);
+       // console.log(Inputs);
         props.getInputs(Inputs)
     }
     return(
@@ -45,7 +47,7 @@ export default function ContactForm(props :any){
                            <i className="fas fa-user"></i>
                        </div>
                    </div>
-                   <input className="form-control" placeholder="Age" />
+                   <input className="form-control" onChange={inputsChanged}  name ="age" placeholder="Age" />
                    <div className="input-group-prepend">
                        <div className="input-group-text">
                            <i className="fas fa-envelope-square"></i>
