@@ -1,65 +1,71 @@
-import React ,{useState , useEffect , useContext} from "react";
-import {UserContext} from "../UserContext"
-export default function ContactForm(props :any){
+import React ,{useState , useEffect , useContext , createContext } from "react";
 
-    const formInputs= {
-        name : "",
-        surname : "",
-        email: "",
-        age : undefined,
-    }
-    const[Inputs , setInputs] = useState(formInputs);
+// @ts-ignore
+export const UserContext = createContext();
+
+export function UserProvider(props :any){
+
+    const[formInputs , setInputs] = useState({
+        name : " ",
+        surname : " ",
+        email: " ",
+        age : " ",
+    });
     const inputsChanged = (e : any) =>{
         var namePlace =e.target.name;
         var placeValue = e.target.value;
 
         setInputs({  // @ts-ignore
-            ...Inputs,[namePlace]:placeValue
+            ...formInputs,[namePlace]:placeValue
         })
     }
-    const SaveInputs = (e: { preventDefault: () => void; }) =>{
+   // console.log(Inputs)
+   /* const SaveInputs = (e: { preventDefault: () => void; }) =>{
         e.preventDefault();
        // console.log(Inputs);
         props.getInputs(Inputs)
-    }
+    }*/
     return(
-       <form onSubmit={SaveInputs}>
-           <div className="form-group input-group" >
-               <div className="input-group-prepend">
-                   <div className="input-group-text">
-                       <i className="fas fa-user"></i>
-                   </div>
-               </div>
-               <input className="form-control" onChange={inputsChanged} name ="name" placeholder="Name" />
-           </div>
-           <div className="form-group input-group" >
-               <div className="input-group-prepend">
-                   <div className="input-group-text">
-                       <i className="fas fa-user"></i>
-                   </div>
-               </div>
-               <input className="form-control" onChange={inputsChanged}  name="surname" placeholder="Surname"/>
-           </div>
-           <div className="form-row">
-               <div className="form-group input-group col-md-24" >
-                   <div className="input-group-prepend">
-                       <div className="input-group-text">
-                           <i className="fas fa-user"></i>
-                       </div>
-                   </div>
-                   <input className="form-control" onChange={inputsChanged}  name ="age" placeholder="Age" />
-                   <div className="input-group-prepend">
-                       <div className="input-group-text">
-                           <i className="fas fa-envelope-square"></i>
-                       </div>
-                   </div>
-                   <input className="form-control" onChange={inputsChanged}  name ="email" placeholder="Mail Address"/>
-               </div>
+        <UserContext.Provider value={formInputs} >
+            <div>
+                <form >
+                    <div className="form-group input-group" >
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">
+                                <i className="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <input className="form-control" onChange={inputsChanged} name ="name" placeholder="Name" />
+                    </div>
+                    <div className="form-group input-group" >
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">
+                                <i className="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <input className="form-control" onChange={inputsChanged} name="surname" placeholder="Surname"/>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group input-group col-md-24" >
+                            <div className="input-group-prepend">
+                                <div className="input-group-text">
+                                    <i className="fas fa-user"></i>
+                                </div>
+                            </div>
+                            <input className="form-control"  name ="age" placeholder="Age" />
+                            <div className="input-group-prepend">
+                                <div className="input-group-text">
+                                    <i className="fas fa-envelope-square"></i>
+                                </div>
+                            </div>
+                            <input className="form-control"  onChange={inputsChanged} name ="email" placeholder="Mail Address"/>
+                        </div>
 
-           </div>
-           <div className="form-group">
-               <input type="submit" value ="Search Users" className="btn btn-success btn-block"/>
-           </div>
-       </form>
+                    </div>
+                </form>
+            </div>
+                {props.children}
+        </UserContext.Provider>
+
     )
 }

@@ -1,40 +1,39 @@
-import React from "react";
-import ContactForm from "./ContactForm";
+import React, {useContext} from "react";
+import {UserContext} from "./UserContext";
 import GetUsers from "../GetUsers";
+import  {UserProvider} from "./UserContext"
 
 export default function Contacts(props: any){
-    let formInputs= {
+
+    let formInputs = useContext(UserContext);
+   // console.log(formInputs)
+    /**let formInputs= {
         name : "",
         surname : "",
         email: "",
         age : undefined,
-    }
+    }*/
 
-    const addProps = (Inputs: any) => {
+    /*const addProps = (Inputs: any) => {
         formInputs = Inputs;
-        //console.log(formInputs.name)
-    }
+        console.log(formInputs.name);
+        console.log(formInputs.surname)
+    }*/
+    var renderOrNot = 0;
 
     return(
-        <div>
-            <div className="jumbotron">
-                <div className="container">
-                    <h1 className="display-5">
-                        User Page
-                    </h1>
+            <UserProvider>
+                <div>
+                    <div className="row">
+                        <div className="col-md-0"/>
+                        <div className="col-md-7">
+                            User List
+                            <GetUsers/>
+                        </div>
+                    </div>
                 </div>
+            </UserProvider>
 
-            </div>
-            <div className="row">
-                <div className="col-md-5">
-                    <ContactForm getInputs ={(e:any)=>{addProps(e)}}/>
-                </div>
-                <div className="col-md-7">
-                    User List
-                    <GetUsers Inputs = {formInputs}/>
 
-                 </div>
-            </div>
-        </div>
     )
 }
