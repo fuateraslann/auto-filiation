@@ -27,8 +27,7 @@ export function UserProvider(props :any){
     }*/
     return(
         <UserContext.Provider value={formInputs} >
-            <div>
-                <Nav/>
+            <div className="col-md-7">
                 <form >
                     <div className="form-group input-group" >
                         <div className="input-group-prepend">

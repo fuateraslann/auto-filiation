@@ -52,11 +52,19 @@ export default function GetUsers() {
     return(
         <div>
             <div>
-                <table>
+                <table id="UserTable">
+                    <thead>
+                        <tr >
+                            <th scope = "col">E-mail</th>
+                            <th scope = "col">Name</th>
+                            <th scope = "col">Surname</th>
+                        </tr>
+                    </thead>
                     <thead>
                     {ids.map((id: string | number) => {
                         return <tr >
-                            <td > {// @ts-ignore
+                            <td>
+                                {// @ts-ignore
                                 UsersInfo[id].email}</td>
                             <td>{// @ts-ignore
                                 UsersInfo[id].name}</td>
@@ -70,6 +78,5 @@ export default function GetUsers() {
             <button onClick={userSave}> Find Contacts</button>
             <FindContacts User={ourUser} UsersInfo ={UsersInfo}/>
         </div>
-
     )
 }

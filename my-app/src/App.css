@@ -2,6 +2,28 @@
   width:64px;
   margin-top : 5px ;
 }
+#UserTable {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#UserTable td, #UserTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#UserTable tr:nth-child(even){background-color: #f2f2f2;}
+
+#UserTable tr:hover {background-color: #ddd;}
+
+#UserTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #b71a1a;
+  color: white;
+}
 .UsersButtonCss{
   color: black;
   display: block;
