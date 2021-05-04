@@ -1,6 +1,7 @@
 import React, {useContext} from "react";
 import {UserContext} from "./UserContext";
 import GetUsers from "../GetUsers";
+import Nav from "../NavBar";
 import  {UserProvider} from "./UserContext"
 
 export default function Contacts(props: any){

@@ -1,5 +1,5 @@
 import React ,{useState , useEffect , useContext , createContext } from "react";
-
+import Nav from "../NavBar";
 // @ts-ignore
 export const UserContext = createContext();
 
@@ -28,6 +28,7 @@ export function UserProvider(props :any){
     return(
         <UserContext.Provider value={formInputs} >
             <div>
+                <Nav/>
                 <form >
                     <div className="form-group input-group" >
                         <div className="input-group-prepend">
