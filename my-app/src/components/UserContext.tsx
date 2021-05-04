@@ -1,5 +1,6 @@
 import React ,{useState , useEffect , useContext , createContext } from "react";
-import Nav from "../NavBar";
+import "../App.css";
+import 'materialize-css';
 // @ts-ignore
 export const UserContext = createContext();
 
@@ -27,44 +28,50 @@ export function UserProvider(props :any){
     }*/
     return(
         <UserContext.Provider value={formInputs} >
-            <div className="col-md-7">
-                <form >
-                    <div className="form-group input-group" >
-                        <div className="input-group-prepend">
-                            <div className="input-group-text">
-                                <i className="fas fa-user"></i>
-                            </div>
-                        </div>
-                        <input className="form-control" onChange={inputsChanged} name ="name" placeholder="Name" />
-                    </div>
-                    <div className="form-group input-group" >
-                        <div className="input-group-prepend">
-                            <div className="input-group-text">
-                                <i className="fas fa-user"></i>
-                            </div>
-                        </div>
-                        <input className="form-control" onChange={inputsChanged} name="surname" placeholder="Surname"/>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group input-group col-md-24" >
+            <div className="row">
+                <div className="col s6">
+                    <h3>Please Write User Info.</h3>
+                    <form >
+                        <div className="form-group input-group" >
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
                                     <i className="fas fa-user"></i>
                                 </div>
                             </div>
-                            <input className="form-control"  name ="age" placeholder="Age" />
+                            <input className="form-control" onChange={inputsChanged} name ="name" placeholder="Name" />
+                        </div>
+                        <div className="form-group input-group" >
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <i className="fas fa-envelope-square"></i>
+                                    <i className="fas fa-user"></i>
                                 </div>
                             </div>
-                            <input className="form-control"  onChange={inputsChanged} name ="email" placeholder="Mail Address"/>
+                            <input className="form-control" onChange={inputsChanged} name="surname" placeholder="Surname"/>
                         </div>
+                        <div className="form-row">
+                            <div className="form-group input-group col-md-24" >
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text">
+                                        <i className="fas fa-user"></i>
+                                    </div>
+                                </div>
+                                <input className="form-control"  name ="age" placeholder="Age" />
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text">
+                                        <i className="fas fa-envelope-square"></i>
+                                    </div>
+                                </div>
+                                <input className="form-control"  onChange={inputsChanged} name ="email" placeholder="Mail Address"/>
+                            </div>
 
-                    </div>
-                </form>
+                        </div>
+                    </form>
+                </div>
+                <div className="col s6 offset-s2">
+                    {props.children}
+                </div>
             </div>
-                {props.children}
+
         </UserContext.Provider>
 
     )

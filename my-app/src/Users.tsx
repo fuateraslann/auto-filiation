@@ -11,7 +11,7 @@ export default function Users() {
             <Nav/>
         </header>
         <div className="section">
-            <div className="col-md-8 offset-md-1">
+            <div className="col-md-9 offset-md-1">
                 <Router>
                     <Switch>
                         <Route path ="/Auto-Filiation-Command-Panel" component={Contacts}/>

@@ -1,7 +1,8 @@
 import React, {useContext} from "react";
 import {UserContext} from "./UserContext";
 import GetUsers from "../GetUsers";
-import Nav from "../NavBar";
+import "../App.css"
+import 'materialize-css';
 import  {UserProvider} from "./UserContext"
 
 export default function Contacts(props: any){
@@ -27,8 +28,7 @@ export default function Contacts(props: any){
                 <div>
                     <div className="row">
                         <div className="col-md-0"/>
-                        <div className="col-md-7">
-                            User List
+                        <div className="col-md-10">
                             <GetUsers/>
                         </div>
                     </div>

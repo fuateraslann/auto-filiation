@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState } from 'react';
 import {db} from "./firebase/config"
 import {UserContext, UserProvider} from "./components/UserContext";
 import FindContacts from "./FindContacts";
-
+import 'materialize-css';
 
 // @ts-ignore
 export default function GetUsers() {
@@ -52,6 +52,7 @@ export default function GetUsers() {
     return(
         <div>
             <div>
+                <h3>User List</h3>
                 <table id="UserTable">
                     <thead>
                         <tr >
