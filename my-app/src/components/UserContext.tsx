@@ -1,8 +1,8 @@
-import React ,{useState , useEffect , useContext , createContext } from "react";
+import React ,{useState , createContext } from "react";
 import "../App.css";
 import 'materialize-css';
 // @ts-ignore
-export const UserContext = createContext();
+export const UserContext = createContext(undefined as any);
 
 export function UserProvider(props :any){
 
@@ -13,19 +13,13 @@ export function UserProvider(props :any){
         age : " ",
     });
     const inputsChanged = (e : any) =>{
-        var namePlace =e.target.name;
-        var placeValue = e.target.value;
+        let namePlace =e.target.name;
+        let placeValue = e.target.value;
 
-        setInputs({  // @ts-ignore
+        setInputs({
             ...formInputs,[namePlace]:placeValue
         })
     }
-   // console.log(Inputs)
-   /* const SaveInputs = (e: { preventDefault: () => void; }) =>{
-        e.preventDefault();
-       // console.log(Inputs);
-        props.getInputs(Inputs)
-    }*/
     return(
         <UserContext.Provider value={formInputs} >
             <div className="row">

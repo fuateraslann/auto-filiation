@@ -3,52 +3,51 @@ import {db} from "./firebase/config"
 import {UserContext, UserProvider} from "./components/UserContext";
 import FindContacts from "./FindContacts";
 import 'materialize-css';
+import {UserClass} from "./classes/UserClass";
 
 // @ts-ignore
 export default function GetUsers() {
 
     let formInputs = useContext(UserContext);
 
-    const [UsersInfo ,setUsersInfo] = useState( []);
+    const [UsersInfo ,setUsersInfo] = useState( Array<UserClass>());
     useEffect( ()=>{
-        db.collection("Users").get().then((querySnapshot) => {
-            // @ts-ignore
-            const usersData: any = [];
-            querySnapshot.forEach((doc) => {
-                usersData.push({...doc.data(), id : doc.id})
-                // doc.data() is never undefined for query doc snapshot
-                // @ts-ignore
-            });
-            // @ts-ignore
-            setUsersInfo(usersData);
+        const userSnap = db.collection("Users").withConverter(UserClass.userConverter).get();
 
+        userSnap.then((querySnapshot) => {
+            let userArr = Array<UserClass>();
+            querySnapshot.forEach((doc) => {
+                const user = doc.data();
+                userArr.push(user);
+            });
+            setUsersInfo(userArr);
+
+        }).catch((error) => {
+            console.log("Error getting document:", error);
         });
+
     },[])
 
-    const [ids ,setIds] = useState([]);
-    useEffect (() =>{
-        let x: any = [];
-        x =Object.keys(UsersInfo).filter(id=>
-            // @ts-ignore
-            UsersInfo[id].email === formInputs.email ||
-            // @ts-ignore
-            UsersInfo[id].name === formInputs.name ||
-            // @ts-ignore
-            UsersInfo[id].surname === formInputs.surname
-        )
-        setIds(x)
-    },[formInputs])
+    const [indexes, setIndexes] = useState(Array<number>());
+    useEffect(() => {
+        let indexArr = Array<number>();
+        UsersInfo.forEach(u => {
+            if (u.getName() === formInputs.name || u.getSurname() === formInputs.surname || u.getEmail() === formInputs.email) {
+                indexArr.push(UsersInfo.indexOf(u));
+            }
+        });
+
+        setIndexes(indexArr);
+    }, [formInputs]);
+
     const[ourUser ,setOurUser] = useState([])
 
     const userSave=()=>{
-        ids.forEach((id: any) => {
+        indexes.forEach((id: any) => {// @ts-ignore
             setOurUser(UsersInfo[id])
         })
 
     }
-
-    //console.log(calculateDistance(location1,location2))
-    //calculateDistance(location1,location2)
     return(
         <div>
             <div>
@@ -62,14 +61,14 @@ export default function GetUsers() {
                         </tr>
                     </thead>
                     <thead>
-                    {ids.map((id: string | number) => {
+                    {indexes.map((id: string | number) => {
                         return <tr >
                             <td>
-                                {// @ts-ignore
+                                {
                                 UsersInfo[id].email}</td>
-                            <td>{// @ts-ignore
+                            <td>{
                                 UsersInfo[id].name}</td>
-                            <td>{// @ts-ignore
+                            <td>{
                                 UsersInfo[id].surname}</td>
                         </tr>
                     })}
