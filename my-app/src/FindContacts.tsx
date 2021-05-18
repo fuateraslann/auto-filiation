@@ -1,7 +1,7 @@
 import {UserLocation} from "./classes/UserLocation";
 import React, { useEffect, useState } from 'react';
 import {UserClass} from "./classes/UserClass";
-
+import {db} from "./firebase/config"
 const degsToRads = (deg: number) => (deg * Math.PI) / 180.0;
 const EARTH_RADIUS = 6371000; //in meters
 export default function FindContacts({User ,UsersInfo  }: any  ) {
@@ -53,6 +53,17 @@ export default function FindContacts({User ,UsersInfo  }: any  ) {
             setContactUsersInfo(contactsArr)
         }
     },[ourUsersData ,ourUser])
+    function markRisky(ContactUsersInfo :any){
+            // A post entry.
+        var frankDocRef = db.collection("User").doc("Tolga");
+
+        db.collection("User").doc("Tolga").update({
+            "isRisky" : true
+        }).then(function() {
+                console.log("Document successfully updated!");
+        });
+
+    }
     return(
         <div>
             <div>
@@ -72,6 +83,7 @@ export default function FindContacts({User ,UsersInfo  }: any  ) {
                     }
                     </thead>
                 </table>
+                <button onClick={markRisky}> Mark Risky</button>
             </div>
         </div>)
 }
