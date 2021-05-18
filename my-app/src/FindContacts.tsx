@@ -30,20 +30,54 @@ export default function FindContacts({User ,UsersInfo  }: any  ) {
     useEffect(()=>{
         if(ourUsersData.length !=0 ){
             var i , j ,k ;  // @ts-ignore
-            let user= new UserClass(ourUser.name, ourUser.surname, ourUser.email, ourUser.birthday, ourUser.chronicDisease);
-            for(j=0 ; j< ourUsersData.length ; j++){
-                let user2= new UserClass(ourUsersData[j].getName(),ourUsersData[j].getSurname(),ourUsersData[j].getEmail(),ourUsersData[j].getBirthdate(),ourUsersData[j].getChronicDisease());
-                if(user.getEmail()!=user2.getEmail()){
+            let user_Main= new UserClass(ourUser.name,ourUser.surname,ourUser.email,ourUser.birthday,ourUser.chronicDisease);
+
+            for(j=0 ; j< ourUsersData.length ; j++){ // @ts-ignore
+                let user_other= new UserClass(ourUsersData[j].name,ourUsersData[j].surname,ourUsersData[j].email,ourUsersData[j].birthday,ourUsersData[j].chronicDisease);
+                
+                
+                if(user_Main.getEmail()!=user_other.getEmail()){ // get rid of from same user mathing
+
                     for(i = 0 ; i<locationData.length ; i++){
-                        for(k=0 ; k<ourUsersData[j].getLocations().length ; k++){
-                            let location2 = new UserLocation(ourUsersData[j].getLocations()[k]);
-                            if(locationData.length!= 0){
-                                var distance = calculateDistance(locationData[i] , location2);
-                                var isTimeViolated = calculateTimeInterval(locationData[i],location2);
-                                if(distance<2 && isTimeViolated){
-                                    contactsArr.push(ourUsersData[j])
-                                    i=locationData.length;
-                                    break;
+                    
+                        if(locationData.length>3 && i>0 && i<locationData.length){
+
+                            // @ts-ignore
+                            for(k=0 ; k<ourUsersData[j].locations.length ; k++){
+                                // @ts-ignore
+                                if(ourUsersData[j].locations.length>3 && k>0 && k<ourUsersData[j].locations.length ){
+
+                                    //@ts-ignore
+                                    let location = new UserLocation(ourUsersData[j].locations[k]);
+
+                                    var distance = calculateDistance(locationData[i] , location);
+                                    var isTimeViolated = isAtTheSameTime(locationData[i],location);
+                                    // If two location close each other with 2m at the same time
+                                    if(distance<2 && isTimeViolated){
+                                        //@ts-ignore
+                                        let location_before = new UserLocation(ourUsersData[j].locations[k-1]);
+                                        //@ts-ignore
+                                        let location2_after = new UserLocation(ourUsersData[j].locations[k+1]);
+
+                                        // get other users Before and After location point distances
+                                        var distanceBefore=calculateDistance(location_before,location);
+                                        var distanceAfter=calculateDistance(location2_after,location);
+                                        
+                                        // get Main users Before and After location point distances 
+                                        var userDistanceBefore=calculateDistance(locationData[i],locationData[i-1]);
+                                        var userDistanceAfter=calculateDistance(locationData[i],locationData[i+1]);
+                                        
+                                        if((distanceBefore<2 && distanceAfter<2) && (userDistanceAfter<2 && userDistanceBefore<2)){
+                                            //console.log(ourUsersData[j])
+                                            var altitudeBetween = calculateAltitude(locationData[i],location);
+                                            if(altitudeBetween<3){
+                                                console.log(ourUsersData[j])
+                                                contactsArr.push(ourUsersData[j])
+                                                i=locationData.length;
+                                                break;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -110,9 +144,16 @@ function calculateDistance(location1 : UserLocation, location2:UserLocation) : n
     return c * EARTH_RADIUS;
 }
 
-// Violated time was set as 30 sec!!
+function calculateAltitude(location1: UserLocation, location2: UserLocation): number{
 
-function calculateTimeInterval(location1 : UserLocation, location2:UserLocation) : boolean{
+    let altitude1=location1.getAltitude();
+    let altitude2=location2.getAltitude();
+
+    return Math.abs(altitude1-altitude2);
+}
+
+// Violated time was set as 30 sec!!
+function isAtTheSameTime(location1 : UserLocation, location2:UserLocation) : boolean{
 
     //console.log(Math.abs(location1.getTime()-location2.getTime()));
 
