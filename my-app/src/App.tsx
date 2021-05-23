@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import LoginPage from "./LoginPage"
+import LoginPage from "./pages/LoginPage"
 import {BrowserRouter as Router , Switch , Route } from "react-router-dom";
-import Users from "./Users";
-
+import FiliationPage from "./pages/FiliationPage";
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
     return (
@@ -11,7 +11,8 @@ function App() {
             <div>
                 <Switch>
                     <Route path="/" exact component={LoginPage}/>
-                    <Route path="/Auto-Filiation-Command-Panel" exact component={Users}/>
+                    <Route path="/Command-Panel" exact component={FiliationPage}/>
+                    <Route component={NotFoundPage}></Route>
                 </Switch>
             </div>
         </Router>

@@ -1,7 +1,7 @@
-import {auth } from "./firebase/config"
+import {auth } from "../firebase/config"
 import React from "react";
-import "./App.css"
-import logo from  "./logo.png"
+import "../App.css"
+import logo from "./logo.png"
 import 'materialize-css';
 import {BrowserRouter as Router, Link ,useHistory} from "react-router-dom";
 
@@ -9,13 +9,11 @@ export default function Nav(){
     const history = useHistory();
     //Sign Out
     function SignOutControl(){
-        // @ts-ignore
         auth.signOut();
         history.push("/")
         history.go(0)
     }
     function HistoryUSers(){
-        // @ts-ignore
         history.push("/Users")
     }
     return(

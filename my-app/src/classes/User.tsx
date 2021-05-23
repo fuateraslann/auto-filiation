@@ -1,7 +1,7 @@
 import { UserLocation } from "./UserLocation";
 import 'firebase/firestore';
 import firebase from 'firebase/app';
-export class UserClass{
+export class User{
     private name : string;
     private surname : string;
     private email : string;
@@ -69,7 +69,7 @@ export class UserClass{
         this.locations.push(userLocation);
     }
     static userConverter = {
-        toFirestore(user: UserClass): firebase.firestore.DocumentData {
+        toFirestore(user: User): firebase.firestore.DocumentData {
             return {
                 name: user.name,
                 surname: user.surname,
@@ -82,9 +82,9 @@ export class UserClass{
         fromFirestore(
             snapshot: firebase.firestore.QueryDocumentSnapshot,
             options: firebase.firestore.SnapshotOptions
-        ): UserClass {
+        ): User {
             const data = snapshot.data(options)!;
-            return new UserClass(data.name, data.surname, data.email, data.birthdate, data.chronicDisease, data.locations);
+            return new User(data.name, data.surname, data.email, data.birthdate, data.chronicDisease, data.locations);
         }
     };
 

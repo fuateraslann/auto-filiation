@@ -41,7 +41,7 @@
   display: block;
 }
 .Logo {
-  background-image: url(./logo.png);
+  background-image: url(components/logo.png);
   width:64px;
   margin-top : 5px ;
 }

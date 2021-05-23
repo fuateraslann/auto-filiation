@@ -1,10 +1,10 @@
 import React ,{useState , createContext } from "react";
 import "../App.css";
 import 'materialize-css';
-// @ts-ignore
-export const UserContext = createContext(undefined as any);
 
-export function UserProvider(props :any){
+export const UserContext  = createContext(undefined as any);
+
+export function FilterUsers(props :any){
 
     const[formInputs , setInputs] = useState({
         name : " ",
