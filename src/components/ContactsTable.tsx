@@ -2,13 +2,7 @@ import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {UserLocation} from "../classes/UserLocation";
 import {User} from "../classes/User";
 import {Button, Table} from "react-bootstrap";
-<<<<<<< HEAD
-import {db} from "../firebase/config";
-import { getDate } from 'date-fns';
-import { count, number } from 'yargs';
-import { bool } from 'prop-types';
-=======
->>>>>>> 5519587813e20261c89c336debbde4d1908c9ced
+
 
 const degsToRads = (deg: number) => (deg * Math.PI) / 180.0;
 const EARTH_RADIUS = 6371000; //in meters
@@ -17,11 +11,12 @@ const EARTH_RADIUS = 6371000; //in meters
 
 type ChildProps = {
     mUser: User,
-    allUsers: Array<User>
+    allUsers: Array<User>,
+    mDay : any,
 }
 
-const ContactsTable: FC<ChildProps> = ({mUser, allUsers}): ReactElement => {
 
+const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay : any   }): ReactElement => {
     const [contacts, setContacts] = useState(Array<User>());
 
     useEffect(() => {

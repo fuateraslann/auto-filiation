@@ -5,9 +5,9 @@ import FindContacts from "./ContactsTable";
 import 'materialize-css';
 import {User} from "../classes/User";
 import {Button, Table} from "react-bootstrap";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { UserLocation } from '../classes/UserLocation';
+import ContactsTable from "./ContactsTable";
 
 export default function FilteredUsersTable() {
 
@@ -48,6 +48,12 @@ export default function FilteredUsersTable() {
     let saveUser = (index: number) => {
         setOurUser(users[index]);
     }
+    const [day, setDay] = useState(2);
+    const getDay = (e : any) => {
+        let dayValue = e.target.value;
+        setDay(dayValue);
+
+    };
     return(
         <div>
             <div>
@@ -72,7 +78,7 @@ export default function FilteredUsersTable() {
                                 users[i].getSurname()}
                             </td>
                             <td>
-                                <input className="form-control"  name ="day" placeholder="day" />
+                                <input className="form-control"  onChange={getDay} name ="day" placeholder="day" />
                             </td>
                             <td>
                                 <Button onClick={() => saveUser(i) }> Find Contacts </Button>
@@ -84,7 +90,7 @@ export default function FilteredUsersTable() {
                     </tbody>
                 </table>
             </div>
-            <FindContacts mUser={ourUser} allUsers ={users} />
+            <FindContacts mUser={ourUser} allUsers ={users} mDay = {day}/>
         </div>
     )
 }
