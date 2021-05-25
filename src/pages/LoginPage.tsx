@@ -1,15 +1,15 @@
-import {auth , db} from "../firebase/config"
-import {BrowserRouter as Router ,Link , useHistory } from "react-router-dom";
+import {auth } from "../firebase/config"
+import { useHistory } from "react-router-dom";
 import "../App.css"
 import logo from "../components/logo.png"
 import 'materialize-css';
-import React, { useEffect, useState } from 'react';
-import { Form, Button, Card, Alert, Container } from "react-bootstrap"
+import React, {  useState } from 'react';
+import { Form, Button } from "react-bootstrap"
 
 // authStateChange
 auth.onAuthStateChanged(u=>{
     if(u){
-        console.log("logged-in")
+        console.log("logged")
     }
     else{
         console.log("logged-out")

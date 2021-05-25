@@ -2,7 +2,6 @@ import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {UserLocation} from "../classes/UserLocation";
 import {User} from "../classes/User";
 import {Button, Table} from "react-bootstrap";
-import {db} from "../firebase/config";
 
 const degsToRads = (deg: number) => (deg * Math.PI) / 180.0;
 const EARTH_RADIUS = 6371000; //in meters

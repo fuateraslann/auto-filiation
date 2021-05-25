@@ -13,8 +13,8 @@ export default function Nav(){
         history.push("/")
         history.go(0)
     }
-    function HistoryUSers(){
-        history.push("/Users")
+    function mapRouting(){
+        history.push("/Map")
     }
     return(
         <nav className="z-depth-0 red darken-4">
@@ -27,8 +27,8 @@ export default function Nav(){
                         <Router>
                             <Link to ="/Users"
                                   className="black-text"
-                                  onClick={HistoryUSers}
-                            >Users</Link>
+                                  onClick={mapRouting}
+                            >Map</Link>
                         </Router>
                     </li>
                     <li className="logged-out" id="SignOutButton">
