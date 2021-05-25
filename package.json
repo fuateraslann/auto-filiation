@@ -62,5 +62,13 @@
     "nodemon": "^2.0.7",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.5"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.ceng.metu.edu.tr/group-20/auto-filiation.git"
+  },
+  "author": "",
+  "license": "ISC"
 }
