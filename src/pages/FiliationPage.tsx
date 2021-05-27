@@ -6,25 +6,27 @@ import Nav from "../components/NavBar";
 function FiliationPage() {
 
     return (
-        <body className="z-depth-0 #fafafa grey lighten-5">
-        <header>
-            <Nav/>
-        </header>
-        <div className="section">
-            <div className="col-md-9 offset-md-1">
-                <FilterUsers>
-                    <div>
-                        <div className="row">
-                            <div className="col-md-0"/>
-                            <div className="col-md-10">
-                                <FilteredUsersTable/>
+        <div>
+            <header>
+                <Nav/>
+            </header>
+            <div className="section">
+                <div className="col-md-9 offset-md-1">
+                    <FilterUsers>
+                        <div>
+                            <div className="row">
+                                <div className="col-md-0"/>
+                                <div className="col-md-13">
+                                    <FilteredUsersTable/>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </FilterUsers>
+                    </FilterUsers>
+                </div>
             </div>
         </div>
-        </body>
+
+
     )
 }
 

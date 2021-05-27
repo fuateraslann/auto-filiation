@@ -102,14 +102,18 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay : any   }): ReactE
         setContacts(contactArr);
     }, [mUser])
 
-    let sendNotification = (mail: string) => {
-        alert("NOTIFY USER " + mail);
+    let sendNotification = (contacts : Array<User>) => {
+        var names =[];
+        for(var i =0 ; i<contacts.length ; i++){
+            names.push(contacts[i].getName()+" " + contacts[i].getSurname());
+        }
+        alert("NOTIFY USER " + names );
     }
 
     return (
         <div>
             <h4>Contacts</h4>
-            <Table size="sm">
+            <Table id ="UserTable" size="sm">
                 <thead>
                 <th>Email</th>
                 <th>Name</th>
@@ -125,11 +129,10 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay : any   }): ReactE
                             contactUser.getName()}</td>
                         <td>{
                             contactUser.getSurname()}</td>
-                        <td>
-                            <Button onClick={() => sendNotification(contactUser.getEmail())}> Send Notification </Button>
-                        </td>
+
                     </tr>
-                })}
+
+                })}<Button onClick={() => sendNotification(contacts)}>Send Notification </Button>
                 </tbody>
             </Table>
         </div>

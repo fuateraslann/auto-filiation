@@ -6,8 +6,7 @@ import 'materialize-css';
 import {User} from "../classes/User";
 import {Button, Table} from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
-import { UserLocation } from '../classes/UserLocation';
-import ContactsTable from "./ContactsTable";
+
 
 export default function FilteredUsersTable() {
 
@@ -36,7 +35,11 @@ export default function FilteredUsersTable() {
         let indexArr = Array<number>();
         users.forEach(u => {
             if (u.getName() === formInputs.name || u.getSurname() === formInputs.surname || u.getEmail() === formInputs.email) {
-                indexArr.push(users.indexOf(u));
+                if(formInputs.surname ==="")
+                    indexArr.push(users.indexOf(u));
+                else
+                    if(u.getSurname() === formInputs.surname)
+                        indexArr.push(users.indexOf(u));
             }
         });
 
