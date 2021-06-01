@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState } from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import {db} from "../firebase/config"
 import {UserContext} from "./FilterUsers";
 import FindContacts from "./ContactsTable";
@@ -7,7 +7,7 @@ import {User} from "../classes/User";
 import {Button, Table} from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 
-
+export const LocationContext  = createContext(undefined as any);
 export default function FilteredUsersTable() {
 
     let formInputs = useContext(UserContext);
@@ -93,6 +93,7 @@ export default function FilteredUsersTable() {
                     </tbody>
                 </table>
             </div>
+            <LocationContext.Provider value={users} />
             <FindContacts mUser={ourUser} allUsers ={users} mDay = {day}/>
         </div>
     )

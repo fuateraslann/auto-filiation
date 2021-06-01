@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, {useState, useContext, useEffect} from "react";
 import * as locations from "../data/mock_data.json";
+import {LocationContext} from "../components/FilteredUsersTable";
 //import logo from './logo.svg';
 //import './App.css';
 
+
+
+
 const fetch = require("isomorphic-fetch");
 const { compose, withProps, withHandlers } = require("recompose");
+
 const {
   withScriptjs,
   withGoogleMap,
@@ -32,7 +37,7 @@ const MapWithAMarkerClusterer = compose(
 )(props =>
   <GoogleMap
     defaultZoom={11}
-    defaultCenter={{ lat: 39.891480 , lng: 32.785450 }} 
+    defaultCenter={{ lat: 39.891480 , lng: 32.785450 }}
   >
     <MarkerClusterer
       onClick={props.onMarkerClustererClick}
@@ -50,32 +55,27 @@ const MapWithAMarkerClusterer = compose(
   </GoogleMap>
 );
 
-class DemoApp extends React.PureComponent {
-  componentWillMount() {
-    this.setState({ markers: [] })
-  }
-
-  componentDidMount() {
+export default  function DemoApp(){
+    let users = useContext(LocationContext)
+    const[markers , setMarkers] = useState([])
     const url = [
-      // Length issue
-      `https://gist.githubusercontent.com`,
-      `/farrrr/dfda7dd7fccfec5474d3`,
-      `/raw/758852bbc1979f6c4522ab4e92d1c92cba8fb0dc/data.json`
+        // Length issue
+        `https://gist.githubusercontent.com`,
+        `/farrrr/dfda7dd7fccfec5474d3`,
+        `/raw/758852bbc1979f6c4522ab4e92d1c92cba8fb0dc/data.json`
     ].join("")
+   useEffect(()=>{
+       fetch(url)
+           .then(res => res.json())
+           .then(data => {
+               setMarkers(data.photos)
+           });
+   },[])
 
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ markers: data.photos });
-      });
-  }
 
-  render() {
     return (
-      <MapWithAMarkerClusterer markers={this.state.markers} />
+        <MapWithAMarkerClusterer markers={markers} />
     )
-  }
 }
 
-export default DemoApp;
 
