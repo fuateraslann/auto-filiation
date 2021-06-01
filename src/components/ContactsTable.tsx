@@ -2,7 +2,7 @@ import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {UserLocation} from "../classes/UserLocation";
 import {User} from "../classes/User";
 import {Button, Table} from "react-bootstrap";
-
+import {db} from "../firebase/config"
 
 const degsToRads = (deg: number) => (deg * Math.PI) / 180.0;
 const EARTH_RADIUS = 6371000; //in meters
@@ -12,13 +12,16 @@ const EARTH_RADIUS = 6371000; //in meters
 type ChildProps = {
     mUser: User,
     allUsers: Array<User>,
-    mDay : any,
+    mDay : number,
 }
 
 
-const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay : any   }): ReactElement => {
+const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElement => {
     const [contacts, setContacts] = useState(Array<User>());
-
+    const [day , setDay] = useState(2);
+    useEffect(()=>{
+        setDay(mDay)
+    },[mDay])
     useEffect(() => {
         let contactArr = Array<User>();
 
@@ -103,11 +106,21 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay : any   }): ReactE
     }, [mUser])
 
     let sendNotification = (contacts : Array<User>) => {
-        var names =[];
+        var namesAndSurnames =[];
+        var emails =[];
         for(var i =0 ; i<contacts.length ; i++){
-            names.push(contacts[i].getName()+" " + contacts[i].getSurname());
+            namesAndSurnames.push(contacts[i].getName()+" " + contacts[i].getSurname());
+            emails.push(contacts[i].getEmail())
         }
-        alert("NOTIFY USER " + names );
+        emails.forEach(email =>{
+            db.collection("Users").doc(email).update({
+                "isRisky" : true
+            }).then(function() {
+                console.log("Document successfully updated!");
+            });
+        })
+
+        alert("NOTIFY USER " + namesAndSurnames );
     }
 
     return (
