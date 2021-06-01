@@ -1,81 +1,107 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, { useState, useRef } from "react";
+//import useSwr from "swr";
+import GoogleMapReact from "google-map-react";
+import useSupercluster from "use-supercluster";
+import "./App.css";
+
 import * as locations from "../data/mock_data.json";
-import {LocationContext} from "../components/FilteredUsersTable";
-//import logo from './logo.svg';
-//import './App.css';
 
+const fetcher = (...args) => fetch(...args).then(response => response.json());
 
+const Marker = ({ children }) => children;
 
+export default function DemoApp() {
+    const mapRef = useRef();
+    const [bounds, setBounds] = useState(null);
+    const [zoom, setZoom] = useState(10);
 
-const fetch = require("isomorphic-fetch");
-const { compose, withProps, withHandlers } = require("recompose");
+    const points = locations.users.map(user => ({
+        type: "Feature",
+        properties: { cluster: false, userId: user.id },
+        geometry: {
+            type: "Point",
+            coordinates: [
+                parseFloat(user.Longtude),
+                parseFloat(user.Latitude)
+            ]
+        }
+    }));
 
-const {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-} = require("react-google-maps");
-const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
-
-const MapWithAMarkerClusterer = compose(
-  withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyA8nuKxeUQFlX2JEg_7NjQd1kUKs4r0LII",
-    loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `1000px` }} />,
-    mapElement: <div style={{ height: `100%` }} />,
-  }),
-  withHandlers({
-    onMarkerClustererClick: () => (markerClusterer) => {
-      const clickedMarkers = markerClusterer.getMarkers()
-      console.log(`Current clicked markers length: ${clickedMarkers.length}`)
-      console.log(clickedMarkers)
-    },
-  }),
-  withScriptjs,
-  withGoogleMap
-)(props =>
-  <GoogleMap
-    defaultZoom={11}
-    defaultCenter={{ lat: 39.891480 , lng: 32.785450 }}
-  >
-    <MarkerClusterer
-      onClick={props.onMarkerClustererClick}
-      averageCenter
-      enableRetinaIcons
-      gridSize={60}
-    >
-      {locations.users.map(marker => (
-        <Marker
-          key={marker.photo_id}
-          position={{ lat: marker.Latitude, lng: marker.Longtude }}
-        />
-      ))}
-    </MarkerClusterer>
-  </GoogleMap>
-);
-
-export default  function DemoApp(){
-    let users = useContext(LocationContext)
-    const[markers , setMarkers] = useState([])
-    const url = [
-        // Length issue
-        `https://gist.githubusercontent.com`,
-        `/farrrr/dfda7dd7fccfec5474d3`,
-        `/raw/758852bbc1979f6c4522ab4e92d1c92cba8fb0dc/data.json`
-    ].join("")
-   useEffect(()=>{
-       fetch(url)
-           .then(res => res.json())
-           .then(data => {
-               setMarkers(data.photos)
-           });
-   },[])
-
+    const { clusters, supercluster } = useSupercluster({
+        points,
+        bounds,
+        zoom,
+        options: { radius: 75, maxZoom: 20 }
+    });
 
     return (
-        <MapWithAMarkerClusterer markers={markers} />
-    )
+        <div style={{ height: "100vh", width: "100%" }}>
+            <GoogleMapReact
+                googleMapURL={"https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyA8nuKxeUQFlX2JEg_7NjQd1kUKs4r0LII"}
+                defaultCenter={{ lat: 39.891480 , lng: 32.785450 }}
+                defaultZoom={5}
+                yesIWantToUseGoogleMapApiInternals
+                onGoogleApiLoaded={({ map }) => {
+                    mapRef.current = map;
+                }}
+                onChange={({ zoom, bounds }) => {
+                    setZoom(zoom);
+                    setBounds([
+                        bounds.nw.lng,
+                        bounds.se.lat,
+                        bounds.se.lng,
+                        bounds.nw.lat
+                    ]);
+                }}
+            >
+                {clusters.map(cluster => {
+                    const [longitude, latitude] = cluster.geometry.coordinates;
+                    const {
+                        cluster: isCluster,
+                        point_count: pointCount
+                    } = cluster.properties;
+
+                    if (isCluster) {
+                        return (
+                            <Marker
+                                key={locations.users.id}
+                                lat={latitude}
+                                lng={longitude}
+                            >
+                                <div
+                                    className="cluster-marker"
+                                    style={{
+                                        width: `${10 + (pointCount / points.length) * 20}px`,
+                                        height: `${10 + (pointCount / points.length) * 20}px`
+                                    }}
+                                    onClick={() => {
+                                        const expansionZoom = Math.min(
+                                            supercluster.getClusterExpansionZoom(cluster.id),
+                                            20
+                                        );
+                                        mapRef.current.setZoom(expansionZoom);
+                                        mapRef.current.panTo({ lat: latitude, lng: longitude });
+                                    }}
+                                >
+                                    {pointCount}
+                                </div>
+                            </Marker>
+                        );
+                    }
+
+                    return (
+                        <Marker
+                            key={locations.users.id}
+                            lat={latitude}
+                            lng={longitude}
+                        >
+                            <button className="user-locations">
+                                <img src="/mark.png" alt="user-locations" />
+                            </button>
+                        </Marker>
+                    );
+                })}
+            </GoogleMapReact>
+        </div>
+    );
 }
-
-
