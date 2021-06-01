@@ -39,7 +39,7 @@ export default function DemoApp() {
             <GoogleMapReact
                 googleMapURL={"https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyA8nuKxeUQFlX2JEg_7NjQd1kUKs4r0LII"}
                 defaultCenter={{ lat: 39.891480 , lng: 32.785450 }}
-                defaultZoom={5}
+                defaultZoom={10}
                 yesIWantToUseGoogleMapApiInternals
                 onGoogleApiLoaded={({ map }) => {
                     mapRef.current = map;
