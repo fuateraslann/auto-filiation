@@ -6,7 +6,7 @@ import {db} from "../firebase/config"
 import {User} from "../classes/User";
 import "../App.css";
 
-//import * as locations from "../data/mock_data.json";
+
 
 const fetcher = (...args) => fetch(...args).then(response => response.json());
 
