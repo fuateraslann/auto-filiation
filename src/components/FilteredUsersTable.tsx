@@ -6,6 +6,7 @@ import 'materialize-css';
 import {User} from "../classes/User";
 import {Button, Table} from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
+import "./style.css";
 
 export const LocationContext  = createContext(undefined as any);
 export default function FilteredUsersTable() {
@@ -28,7 +29,7 @@ export default function FilteredUsersTable() {
             console.log("Error getting document:", error);
         });
     }, []);
-
+    
 
     const [indexes, setIndexes] = useState(Array<number>());
     useEffect(() => {

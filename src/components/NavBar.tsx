@@ -25,7 +25,7 @@ export default function Nav(){
                 <ul id="nav-mobile" className="right hide-on-med-and-down">
                     <li className="logged-out" id="UsersButton">
                         <Router>
-                            <Link to ="/Users"
+                            <Link to ="/Map"
                                   className="black-text"
                                   onClick={mapRouting}
                             >Map</Link>
