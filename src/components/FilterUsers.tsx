@@ -7,10 +7,10 @@ export const UserContext  = createContext(undefined as any);
 export function FilterUsers(props :any){
 
     const[formInputs , setInputs] = useState({
-        name : " ",
-        surname : " ",
-        email: " ",
-        age : " ",
+        name : "",
+        surname : "",
+        email: "",
+        age : "",
     });
     const inputsChanged = (e : any) =>{
         let namePlace =e.target.name;

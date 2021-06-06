@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState } from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import {db} from "../firebase/config"
 import {UserContext} from "./FilterUsers";
 import FindContacts from "./ContactsTable";
@@ -6,9 +6,8 @@ import 'materialize-css';
 import {User} from "../classes/User";
 import {Button, Table} from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
-import { UserLocation } from '../classes/UserLocation';
-import ContactsTable from "./ContactsTable";
 
+export const LocationContext  = createContext(undefined as any);
 export default function FilteredUsersTable() {
 
     let formInputs = useContext(UserContext);
@@ -36,7 +35,11 @@ export default function FilteredUsersTable() {
         let indexArr = Array<number>();
         users.forEach(u => {
             if (u.getName() === formInputs.name || u.getSurname() === formInputs.surname || u.getEmail() === formInputs.email) {
-                indexArr.push(users.indexOf(u));
+                if(formInputs.surname ==="")
+                    indexArr.push(users.indexOf(u));
+                else
+                    if(u.getSurname() === formInputs.surname)
+                        indexArr.push(users.indexOf(u));
             }
         });
 
@@ -90,6 +93,7 @@ export default function FilteredUsersTable() {
                     </tbody>
                 </table>
             </div>
+            <LocationContext.Provider value={users} />
             <FindContacts mUser={ourUser} allUsers ={users} mDay = {day}/>
         </div>
     )

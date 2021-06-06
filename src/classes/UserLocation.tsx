@@ -16,17 +16,18 @@ export  class UserLocation{
     }
 
 
-    /*getLongitude() : number{
+    getLongitude() : number{
         return this.longitude;
     }
-
-    setLongitude(longitude:number) : void{
-        this.longitude = longitude;
-    }
-
     getLatitude() : number{
         return this.latitude;
     }
+
+    /*setLongitude(longitude:number) : void{
+        this.longitude = longitude;
+    }
+
+
 
     setLatitude(latitude:number) : void{
         this.latitude = latitude;

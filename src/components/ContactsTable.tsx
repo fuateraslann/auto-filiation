@@ -2,7 +2,7 @@ import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {UserLocation} from "../classes/UserLocation";
 import {User} from "../classes/User";
 import {Button, Table} from "react-bootstrap";
-
+import {db} from "../firebase/config"
 
 const degsToRads = (deg: number) => (deg * Math.PI) / 180.0;
 const EARTH_RADIUS = 6371000; //in meters
@@ -12,13 +12,16 @@ const EARTH_RADIUS = 6371000; //in meters
 type ChildProps = {
     mUser: User,
     allUsers: Array<User>,
-    mDay : any,
+    mDay : number,
 }
 
 
-const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay : any   }): ReactElement => {
+const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElement => {
     const [contacts, setContacts] = useState(Array<User>());
-
+    const [day , setDay] = useState(2);
+    useEffect(()=>{
+        setDay(mDay)
+    },[mDay])
     useEffect(() => {
         let contactArr = Array<User>();
 
@@ -31,7 +34,7 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay : any   }): ReactE
 
             if (mUser.getEmail() !== comparedUser.getEmail()) { // get rid of same user matching
 
-                let day = 7; // Get last 7 days Contacts
+                let day = mDay; // Get last 7 days Contacts
                 let seconds = day*86400; // convert day to seconds
 
                 let comparedUserLocations = comparedUser.getLocations();
@@ -102,14 +105,28 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay : any   }): ReactE
         setContacts(contactArr);
     }, [mUser])
 
-    let sendNotification = (mail: string) => {
-        alert("NOTIFY USER " + mail);
+    let sendNotification = (contacts : Array<User>) => {
+        var namesAndSurnames =[];
+        var emails =[];
+        for(var i =0 ; i<contacts.length ; i++){
+            namesAndSurnames.push(contacts[i].getName()+" " + contacts[i].getSurname());
+            emails.push(contacts[i].getEmail())
+        }
+        emails.forEach(email =>{
+            db.collection("Users").doc(email).update({
+                "isRisky" : true
+            }).then(function() {
+                console.log("Document successfully updated!");
+            });
+        })
+
+        alert("NOTIFY USER " + namesAndSurnames );
     }
 
     return (
         <div>
             <h4>Contacts</h4>
-            <Table size="sm">
+            <Table id ="UserTable" size="sm">
                 <thead>
                 <th>Email</th>
                 <th>Name</th>
@@ -125,11 +142,10 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay : any   }): ReactE
                             contactUser.getName()}</td>
                         <td>{
                             contactUser.getSurname()}</td>
-                        <td>
-                            <Button onClick={() => sendNotification(contactUser.getEmail())}> Send Notification </Button>
-                        </td>
+
                     </tr>
-                })}
+
+                })}<Button onClick={() => sendNotification(contacts)}>Send Notification </Button>
                 </tbody>
             </Table>
         </div>
