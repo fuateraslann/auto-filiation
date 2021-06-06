@@ -1,10 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 //import useSwr from "swr";
 import GoogleMapReact from "google-map-react";
 import useSupercluster from "use-supercluster";
-import "./App.css";
+import {db} from "../firebase/config"
+import {User} from "../classes/User";
+import "../App.css";
 
-import * as locations from "../data/mock_data.json";
+//import * as locations from "../data/mock_data.json";
 
 const fetcher = (...args) => fetch(...args).then(response => response.json());
 
@@ -14,19 +16,33 @@ export default function DemoApp() {
     const mapRef = useRef();
     const [bounds, setBounds] = useState(null);
     const [zoom, setZoom] = useState(10);
+    const [locations, setLocations] = useState([]);
+    useEffect( ()=>{
+        db.collection("Users").get().then((querySnapshot) => {
 
-    const points = locations.users.map(user => ({
+            const usersData = [];
+            querySnapshot.forEach((doc) => {
+                usersData.push({...doc.data(), id : doc.id})
+                // doc.data() is never undefined for query doc snapshot
+
+            });
+
+            setLocations(usersData);
+        });
+    },[])
+
+
+    const points = locations.map(user => ({
         type: "Feature",
         properties: { cluster: false, userId: user.id },
         geometry: {
             type: "Point",
             coordinates: [
-                parseFloat(user.Longtude),
-                parseFloat(user.Latitude)
+                parseFloat(user.locations[user.locations.length-1].latitude),
+                parseFloat(user.locations[user.locations.length-1].longitude)
             ]
         }
     }));
-
     const { clusters, supercluster } = useSupercluster({
         points,
         bounds,
@@ -64,7 +80,7 @@ export default function DemoApp() {
                     if (isCluster) {
                         return (
                             <Marker
-                                key={locations.users.id}
+                                key={locations.id}
                                 lat={latitude}
                                 lng={longitude}
                             >
@@ -91,7 +107,7 @@ export default function DemoApp() {
 
                     return (
                         <Marker
-                            key={locations.users.id}
+                            key={locations.id}
                             lat={latitude}
                             lng={longitude}
                         >

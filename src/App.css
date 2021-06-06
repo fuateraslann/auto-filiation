@@ -41,7 +41,7 @@
   display: block;
 }
 .Logo {
-  background-image: url(components/logo.png);
+  background-image: url(./components/logo.png);
   width:64px;
   margin-top : 5px ;
 }
@@ -95,3 +95,21 @@
   list-style: none;
 }
 
+.cluster-marker {
+  color: #fff;
+  background: #229206;
+  border-radius: 50%;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-locations {
+  background: none;
+  border: none;
+}
+
+.user-locations img {
+  width: 25px;
+}
