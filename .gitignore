@@ -24,6 +24,6 @@ yarn-error.log*
 
 # idea cache directory
 .idea/
-.eslintcache
+
 
 
