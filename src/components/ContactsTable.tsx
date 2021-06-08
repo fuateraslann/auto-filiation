@@ -111,6 +111,7 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElemen
         var namesAndSurnames =[];
         var emails =[];
         for(var i =0 ; i<contacts.length ; i++){
+
             namesAndSurnames.push(contacts[i].getName()+" " + contacts[i].getSurname());
             emails.push(contacts[i].getEmail())
         }

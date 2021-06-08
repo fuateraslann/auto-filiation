@@ -40,6 +40,10 @@
   color: black;
   display: block;
 }
+.X{
+  font-size: xx-large;
+  margin-top: 50px;
+}
 .Logo {
   background-image: url(./components/logo.png);
   width:64px;

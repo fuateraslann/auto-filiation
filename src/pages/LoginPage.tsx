@@ -41,6 +41,7 @@ export default function LoginPage(){
     };
 
     return(
+        <div>
         <nav className="z-depth-0 red darken-4">
             <div className="nav-wrapper container">
                 <a href="/" className=" brand-logo">
@@ -83,6 +84,24 @@ export default function LoginPage(){
                     </div>
             </div>
         </nav>
+    <header id="header">
+        <div className="intro">
+            <div className="overlay">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-8 col-md-offset-2 intro-text">
+                            <h1>Auto Filiation</h1>
+                            <p className="X">
+                                Automated Pandemic Spread Tracking
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    </div>
     )
 
 }
