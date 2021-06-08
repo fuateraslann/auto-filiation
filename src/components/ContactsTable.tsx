@@ -72,8 +72,8 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElemen
                                 let isTimeViolated = isAtTheSameTime(comparedUserLocation, mUserLocation);
 
                                 // If two location close each other with 5m at the same time
-                                if (distance < 5 && isTimeViolated) {
-                                    console.log(j)
+                                if (distance < 20 && isTimeViolated) {
+                                    //console.log(j)
                                     let locationBefore = comparedUserLocations[j - 1];
                                     let locationAfter = comparedUserLocations[j + 1];
 
@@ -85,7 +85,7 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElemen
                                     //let userDistanceBefore = calculateDistance(locationData[i], locationData[i - 1]);
                                     //let userDistanceAfter = calculateDistance(locationData[i], locationData[i + 1]);
 
-                                    if ((distanceBefore < 50 && distanceAfter < 50) /*&& (userDistanceAfter < 5 && userDistanceBefore < 5)*/) {
+                                    if ((distanceBefore < 20 && distanceAfter < 20) /*&& (userDistanceAfter < 5 && userDistanceBefore < 5)*/) {
                                         let altitudeBetween = calculateAltitude(comparedUserLocation, mUserLocation);
                                         if (altitudeBetween < 3) {
                                             //console.log(myUserData[j])
@@ -110,8 +110,12 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElemen
     let sendNotification = (contacts : Array<User>) => {
         var namesAndSurnames =[];
         var emails =[];
+<<<<<<< HEAD
         for(var i =0 ; i<contacts.length ; i++){
 
+=======
+        for(var i =0 ; i<contacts.length-2 ; i++){
+>>>>>>> fba777cfd6b8c9286be1fdf829191a2c2e2a932e
             namesAndSurnames.push(contacts[i].getName()+" " + contacts[i].getSurname());
             emails.push(contacts[i].getEmail())
         }
@@ -123,7 +127,7 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElemen
             });
         })
 
-        alert("NOTIFY USER " + namesAndSurnames );
+        alert("  Above '55' years old Users NOTIFIED ");
     }
 
     return (
