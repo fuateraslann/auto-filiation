@@ -60,7 +60,7 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElemen
                             if(checkTimeInterval(comparedUserLocations[l],startTimeInterval)) break;
                         }
 
-                        for (let j = l; j < comparedUserLocationsLength; j++) { // starts from l th index which is first index of ComparedUser  for desired time interval
+                        for (let j = l; j < comparedUserLocationsLength-1; j++) { // starts from l th index which is first index of ComparedUser  for desired time interval
                             if (comparedUserLocationsLength > 3) {
 
                                 //COMPARE TWO LOCATIONS
@@ -72,6 +72,7 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElemen
 
                                 // If two location close each other with 5m at the same time
                                 if (distance < 5 && isTimeViolated) {
+                                    console.log(j)
                                     let locationBefore = comparedUserLocations[j - 1];
                                     let locationAfter = comparedUserLocations[j + 1];
 
@@ -83,7 +84,7 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElemen
                                     //let userDistanceBefore = calculateDistance(locationData[i], locationData[i - 1]);
                                     //let userDistanceAfter = calculateDistance(locationData[i], locationData[i + 1]);
 
-                                    if ((distanceBefore < 5 && distanceAfter < 5) /*&& (userDistanceAfter < 5 && userDistanceBefore < 5)*/) {
+                                    if ((distanceBefore < 50 && distanceAfter < 50) /*&& (userDistanceAfter < 5 && userDistanceBefore < 5)*/) {
                                         let altitudeBetween = calculateAltitude(comparedUserLocation, mUserLocation);
                                         if (altitudeBetween < 3) {
                                             //console.log(myUserData[j])
