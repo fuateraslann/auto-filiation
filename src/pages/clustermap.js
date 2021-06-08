@@ -59,7 +59,7 @@ export default function DemoApp() {
                 //googleMapURL={"https://maps.googleapis.com/maps/api/js?key=AIzaSyA8nuKxeUQFlX2JEg_7NjQd1kUKs4r0LII&callback=initMap"}
                 //googleMapURL={"http://maps.googleapis.com/"}
                 defaultCenter={{ lat: 39.891480 , lng: 32.785450 }}
-                defaultZoom={11}
+                defaultZoom={17}
                 //mapId={'a2f90edf59fbd576'}
                 yesIWantToUseGoogleMapApiInternals
                 onGoogleApiLoaded={({ map }) => {
