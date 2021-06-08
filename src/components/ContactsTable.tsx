@@ -34,7 +34,7 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElemen
 
             if (mUser.getEmail() !== comparedUser.getEmail()) { // get rid of same user matching
 
-                let day = 7; // Get last 7 days Contacts
+                let day = mDay ; // Get last 7 days Contacts
                 let seconds = day*86400; // convert day to seconds
 
                 let comparedUserLocations = comparedUser.getLocations();
@@ -47,7 +47,8 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElemen
                 let k;
                 for(k=1;k< mUserLocationsLength;k++){
             
-                    if(checkTimeInterval(mUserLocations[k],startTimeInterval)) break;
+                    if(checkTimeInterval(mUserLocations[k],startTimeInterval)) break;                        
+                        
                 }
 
                 for (let i = k; i < mUserLocationsLength; i++) { //starts from k th index which is first index of User for desired time interval
@@ -146,7 +147,14 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElemen
 
                     </tr>
 
-                })}<Button onClick={() => sendNotification(contacts)}>Send Notification </Button>
+                })}<tr>
+                    <td>
+                    <Button onClick={() => sendNotification(contacts)}>Send Notification </Button>
+                    </td>
+                    <td>
+                    <input className="form-control"  name ="age" placeholder="Age Filter" />
+                    </td>
+                </tr> 
                 </tbody>
             </Table>
         </div>
