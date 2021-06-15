@@ -16,39 +16,39 @@ type ChildProps = {
 }
 
 
-const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElement => {
+// @ts-ignore
+const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }):ReactElement => {
     const [contacts, setContacts] = useState(Array<User>());
-    const [day , setDay] = useState(2);
-    useEffect(()=>{
+    const [day, setDay] = useState(2);
+    useEffect(() => {
         setDay(mDay)
-    },[mDay])
+    }, [mDay])
     useEffect(() => {
         let contactArr = Array<User>();
 
         let mUserLocations = mUser.getLocations();
         let mUserLocationsLength = mUserLocations.length;
 
-        
 
         allUsers.forEach(comparedUser => {
 
             if (mUser.getEmail() !== comparedUser.getEmail()) { // get rid of same user matching
 
-                let day = mDay ; // Get last 7 days Contacts
-                let seconds = day*86400; // convert day to seconds
+                let day = mDay; // Get last 7 days Contacts
+                let seconds = day * 86400; // convert day to seconds
 
                 let comparedUserLocations = comparedUser.getLocations();
                 let comparedUserLocationsLength = comparedUserLocations.length;
 
                 //According to the past days parameter, Take the location  in specific interval between [(today-pastDay)- today]
-                let today=new Date().getTime() / 1000;  // it returns today as sec
+                let today = new Date().getTime() / 1000;  // it returns today as sec
                 let startTimeInterval = today - seconds;
 
                 let k;
-                for(k=1;k< mUserLocationsLength;k++){
-            
-                    if(checkTimeInterval(mUserLocations[k],startTimeInterval)) break;                        
-                        
+                for (k = 1; k < mUserLocationsLength; k++) {
+
+                    if (checkTimeInterval(mUserLocations[k], startTimeInterval)) break;
+
                 }
 
                 for (let i = k; i < mUserLocationsLength; i++) { //starts from k th index which is first index of User for desired time interval
@@ -57,11 +57,11 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElemen
                         let mUserLocation = mUserLocations[i];
 
                         let l;
-                        for(l=1;l<comparedUserLocationsLength;l++){
-                            if(checkTimeInterval(comparedUserLocations[l],startTimeInterval)) break;
+                        for (l = 1; l < comparedUserLocationsLength; l++) {
+                            if (checkTimeInterval(comparedUserLocations[l], startTimeInterval)) break;
                         }
 
-                        for (let j = l; j < comparedUserLocationsLength-1; j++) { // starts from l th index which is first index of ComparedUser  for desired time interval
+                        for (let j = l; j < comparedUserLocationsLength - 1; j++) { // starts from l th index which is first index of ComparedUser  for desired time interval
                             if (comparedUserLocationsLength > 3) {
 
                                 //COMPARE TWO LOCATIONS
@@ -107,113 +107,112 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }): ReactElemen
         setContacts(contactArr);
     }, [mUser])
 
-    let sendNotification = (contacts : Array<User>) => {
-        var namesAndSurnames =[];
-        var emails =[];
-<<<<<<< HEAD
-        for(var i =0 ; i<contacts.length ; i++){
+    let sendNotification = (contacts: Array<User>) => {
+        var namesAndSurnames = [];
+        var emails = [];
 
-=======
-        for(var i =0 ; i<contacts.length-2 ; i++){
->>>>>>> fba777cfd6b8c9286be1fdf829191a2c2e2a932e
-            namesAndSurnames.push(contacts[i].getName()+" " + contacts[i].getSurname());
-            emails.push(contacts[i].getEmail())
+        for (var i = 0; i < contacts.length; i++) {
+
+
+            for (var i = 0; i < contacts.length - 2; i++) {
+
+                namesAndSurnames.push(contacts[i].getName() + " " + contacts[i].getSurname());
+                emails.push(contacts[i].getEmail())
+            }
+            emails.forEach(email => {
+                db.collection("Users").doc(email).update({
+                    "isRisky": true
+                }).then(function () {
+                    console.log("Document successfully updated!");
+                });
+            })
+
+            alert("  Above '55' years old Users NOTIFIED ");
         }
-        emails.forEach(email =>{
-            db.collection("Users").doc(email).update({
-                "isRisky" : true
-            }).then(function() {
-                console.log("Document successfully updated!");
-            });
-        })
-
-        alert("  Above '55' years old Users NOTIFIED ");
     }
+        return (
+            <div>
+                <h4>Contacts</h4>
+                <Table id="UserTable" size="sm">
+                    <thead>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    </thead>
 
-    return (
-        <div>
-            <h4>Contacts</h4>
-            <Table id ="UserTable" size="sm">
-                <thead>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Surname</th>
-                </thead>
+                    <tbody>
+                    {contacts.map((contactUser) => {
+                        return <tr>
+                            <td> {
+                                contactUser.getEmail()}</td>
+                            <td>{
+                                contactUser.getName()}</td>
+                            <td>{
+                                contactUser.getSurname()}</td>
 
-                <tbody>
-                {contacts.map((contactUser) => {
-                    return <tr>
-                        <td> {
-                            contactUser.getEmail()}</td>
-                        <td>{
-                            contactUser.getName()}</td>
-                        <td>{
-                            contactUser.getSurname()}</td>
+                        </tr>
 
+                    })}
+                    <tr>
+                        <td>
+                            <Button onClick={() => sendNotification(contacts)}>Send Notification </Button>
+                        </td>
+                        <td>
+                            <input className="form-control" name="age" placeholder="Age Filter"/>
+                        </td>
                     </tr>
-
-                })}<tr>
-                    <td>
-                    <Button onClick={() => sendNotification(contacts)}>Send Notification </Button>
-                    </td>
-                    <td>
-                    <input className="form-control"  name ="age" placeholder="Age Filter" />
-                    </td>
-                </tr> 
-                </tbody>
-            </Table>
-        </div>
-    )
-}
-
-export default ContactsTable;
-
-function checkTimeInterval(location: UserLocation,startingTime: number):any{
-
-
-    if(location.time>startingTime){
-        return true;
+                    </tbody>
+                </Table>
+            </div>
+        )
     }
-    else{
-         return false;
+
+    export default ContactsTable;
+
+    function checkTimeInterval(location: UserLocation, startingTime: number): any {
+
+
+        if (location.time > startingTime) {
+            return true;
+        } else {
+            return false;
         }
 
-}
+    }
 
-function calculateDistance(location1: UserLocation, location2: UserLocation): number {
+    function calculateDistance(location1: UserLocation, location2: UserLocation): number {
 
-    //convert latitutes and longitudes to radians
-    let lat1 = degsToRads(location1.latitude);
-    let lng1 = degsToRads(location1.latitude);
-    let lat2 = degsToRads(location2.latitude);
-    let lng2 = degsToRads(location2.latitude);
-    
+        //convert latitutes and longitudes to radians
+        let lat1 = degsToRads(location1.latitude);
+        let lng1 = degsToRads(location1.latitude);
+        let lat2 = degsToRads(location2.latitude);
+        let lng2 = degsToRads(location2.latitude);
 
 
-    //haversine formula
-    let dlat = lat2 - lat1;
-    let dlon = lng2 - lng1;
+        //haversine formula
+        let dlat = lat2 - lat1;
+        let dlon = lng2 - lng1;
 
-    let a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2), 2);
+        let a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2), 2);
 
-    let c = 2 * Math.asin(Math.sqrt(a));
-    return c * EARTH_RADIUS;
-}
+        let c = 2 * Math.asin(Math.sqrt(a));
+        return c * EARTH_RADIUS;
+    }
 
-function calculateAltitude(location1: UserLocation, location2: UserLocation): number {
+    function calculateAltitude(location1: UserLocation, location2: UserLocation): number {
 
-    let altitude1 = location1.altitude;
-    let altitude2 = location2.altitude;
+        let altitude1 = location1.altitude;
+        let altitude2 = location2.altitude;
 
-    return Math.abs(altitude1 - altitude2);
-}
+        return Math.abs(altitude1 - altitude2);
+    }
 
 // Violated time was set as 120 sec!!
-function isAtTheSameTime(location1: UserLocation, location2: UserLocation): boolean {
-    if (Math.abs(location1.time - location2.time) < 1200) {
-        //console.log("Time = " + Math.abs(location1.time - location2.time));
-        return true;
-    } else {
-        return false;
+    function isAtTheSameTime(location1: UserLocation, location2: UserLocation): boolean {
+        if (Math.abs(location1.time - location2.time) < 1200) {
+            //console.log("Time = " + Math.abs(location1.time - location2.time));
+            return true;
+        } else {
+            return false;
+        }
     }
-}
