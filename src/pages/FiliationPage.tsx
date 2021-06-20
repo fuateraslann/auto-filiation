@@ -5,6 +5,7 @@ import {FilterUsers} from "../components/FilterUsers";
 import Nav from "../components/NavBar";
 import * as datas from "../data/mock_data.json";
 import DemoApp from "./clustermap";
+import "../App.css"
 function FiliationPage() {
     /*function saveDatas(){
         datas.users.map(user=>{
@@ -37,10 +38,13 @@ function FiliationPage() {
                     </FilterUsers>
                 </div>
             </div>
-            <div className="section">
-                <div className="col-md-5 offset-md-1">
+            <div className="row">
+                    <div  className=" col-sm-4 offset-md-1 " style={{height: "10px"}}>
                     <DemoApp/>
                 </div>
+            </div>
+            <div className="section">
+
             </div>
         </div>
 

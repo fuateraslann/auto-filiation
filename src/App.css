@@ -17,6 +17,7 @@
   border-collapse: collapse;
   width: 120%;
 }
+
 #UserTable td, #UserTable th {
   border: 2px solid #ddd;
   padding: 10px;
