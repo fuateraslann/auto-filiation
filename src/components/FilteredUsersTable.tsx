@@ -94,7 +94,7 @@ export default function FilteredUsersTable() {
                     </tbody>
                 </table>
             </div>
-            <LocationContext.Provider value={users} />
+
             <FindContacts mUser={ourUser} allUsers ={users} mDay = {day}/>
         </div>
     )

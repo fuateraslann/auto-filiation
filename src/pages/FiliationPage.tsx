@@ -4,7 +4,7 @@ import {db} from "../firebase/config"
 import {FilterUsers} from "../components/FilterUsers";
 import Nav from "../components/NavBar";
 import * as datas from "../data/mock_data.json";
-import DemoApp from "./clustermap";
+import ContactMap from "../components/ContactMap";
 import "../App.css"
 function FiliationPage() {
     /*function saveDatas(){
@@ -40,7 +40,7 @@ function FiliationPage() {
             </div>
             <div className="row">
                     <div  className=" col-sm-4 offset-md-1 " style={{height: "10px"}}>
-                    <DemoApp/>
+                    <ContactMap/>
                 </div>
             </div>
             <div className="section">

@@ -1,8 +1,10 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, {createContext, FC, ReactElement, useEffect, useState} from 'react';
 import {UserLocation} from "../classes/UserLocation";
 import {User} from "../classes/User";
 import {Button, Table} from "react-bootstrap";
 import {db} from "../firebase/config"
+import ContactMap from "./ContactMap";
+
 
 const degsToRads = (deg: number) => (deg * Math.PI) / 180.0;
 const EARTH_RADIUS = 6371000; //in meters
@@ -14,7 +16,7 @@ type ChildProps = {
     allUsers: Array<User>,
     mDay : number,
 }
-
+export const LocationContext  = createContext(undefined as any);
 
 // @ts-ignore
 const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }):ReactElement => {
@@ -131,8 +133,10 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }):ReactElement
         }
     }
         return (
-            <div>
-                <h4>Contacts</h4>
+            <LocationContext.Provider value={contacts}>
+                <div>
+
+                    <h4>Contacts</h4>
                 <Table id="UserTable" size="sm">
                     <thead>
                     <th>Email</th>
@@ -163,7 +167,9 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }):ReactElement
                     </tr>
                     </tbody>
                 </Table>
-            </div>
+                <LocationContext.Provider value={contacts} />
+                 </div>
+                </LocationContext.Provider >
         )
     }
 
