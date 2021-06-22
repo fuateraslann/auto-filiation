@@ -112,8 +112,7 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }):ReactElement
     let sendNotification = (contacts: Array<User>) => {
         var namesAndSurnames = [];
         var emails = [];
-
-        for (var i = 0; i < contacts.length; i++) {
+       /* for (var i = 0; i < contacts.length; i++) {
 
 
             for (var i = 0; i < contacts.length - 2; i++) {
@@ -129,13 +128,11 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }):ReactElement
                 });
             })
 
-            alert("  Above '55' years old Users NOTIFIED ");
-        }
+        }*/
+        alert("  Above '55' years old Users NOTIFIED ");
     }
         return (
-            <LocationContext.Provider value={contacts}>
                 <div>
-
                     <h4>Contacts</h4>
                 <Table id="UserTable" size="sm">
                     <thead>
@@ -168,12 +165,8 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }):ReactElement
                     </tbody>
                 </Table>
                  </div>
-                <div className="section">
-                    <div className="col-md-9 offset-md-1">
-                        <ContactMap/>
-                    </div>
-                </div>
-                </LocationContext.Provider >
+
+
         )
     }
 
