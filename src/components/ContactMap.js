@@ -5,18 +5,16 @@ import useSupercluster from "use-supercluster";
 import {db} from "../firebase/config"
 import "../App.css";
 
-import {LocationContext} from "./FilteredUsersTable";
+import {LocationContext} from "./ContactsTable";
 
 
 const fetcher = (...args) => fetch(...args).then(response => response.json());
 
 const Marker = ({ children }) => children;
 
-export default function ContactMap (props){
+export default function ContactMap (){
     let contacts = useContext(LocationContext);
-    useEffect(() => {
-        console.log(contacts)
-    }, [contacts]);
+    let flag = true;
     const mapRef = useRef();
     const [bounds, setBounds] = useState(null);
     const [zoom, setZoom] = useState(10);
@@ -26,12 +24,16 @@ export default function ContactMap (props){
 
             const usersData = [];
             querySnapshot.forEach((doc) => {
-                /*for(let i =0 ; i <contacts.size() ; i++){
-                    console.log(...doc.data().name);
-                    if(contacts[i].getName() === {...doc.data().name})
 
-                }*/
-                usersData.push({...doc.data(), id : doc.id})
+                for(let i =0 ; i <contacts.length ; i++){
+                   for(let j= 0 ; i< contacts[i].getName().length ; j++){
+                       if(contacts[i].getName()[j] !== {...doc.data().name}[j])
+                           flag = false;
+                   }
+                   if(flag)
+                       usersData.push({...doc.data(), id : doc.id})
+                }
+              //  usersData.push({...doc.data(), id : doc.id})
                 // doc.data() is never undefined for query doc snapshot
 
             });

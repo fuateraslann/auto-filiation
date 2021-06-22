@@ -38,14 +38,6 @@ function FiliationPage() {
                     </FilterUsers>
                 </div>
             </div>
-            <div className="row">
-                    <div  className=" col-sm-4 offset-md-1 " style={{height: "10px"}}>
-                    <ContactMap/>
-                </div>
-            </div>
-            <div className="section">
-
-            </div>
         </div>
 
 

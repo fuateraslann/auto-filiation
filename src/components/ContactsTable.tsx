@@ -167,8 +167,12 @@ const ContactsTable: FC<ChildProps> = ({mUser, allUsers ,mDay    }):ReactElement
                     </tr>
                     </tbody>
                 </Table>
-                <LocationContext.Provider value={contacts} />
                  </div>
+                <div className="section">
+                    <div className="col-md-9 offset-md-1">
+                        <ContactMap/>
+                    </div>
+                </div>
                 </LocationContext.Provider >
         )
     }

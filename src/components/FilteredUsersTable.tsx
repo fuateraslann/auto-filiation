@@ -8,7 +8,6 @@ import {Button, Table} from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import "./style.css";
 
-export const LocationContext  = createContext(undefined as any);
 export default function FilteredUsersTable() {
 
     let formInputs = useContext(UserContext);
